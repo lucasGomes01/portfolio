@@ -16,9 +16,10 @@
 .navbar {
   position: fixed;
   width: 100%;
-  padding: 15px;
-  background: crimson;
+  padding: 30px 0;
   font-family: 'Ubuntu', sans-serif;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
 }
 
 .navbar .max-width {
@@ -41,6 +42,8 @@
 
 .navbar .logo a span {
   color: crimson;
+  -webkit-transition: color 0.3s ease;
+  transition: color 0.3s ease;
 }
 
 .navbar .menu li {
@@ -59,6 +62,26 @@
 
 .navbar .menu li a:hover {
   color: crimson;
+}
+
+.sticky {
+  padding: 15px 0;
+  background: crimson;
+}
+
+.sticky .logo a span {
+  color: #fff;
+}
+
+.sticky .menu li a:hover {
+  color: #fff;
+}
+
+.menu-btn {
+  color: #fff;
+  font-size: 23px;
+  cursor: pointer;
+  display: none;
 }
 
 .home {
@@ -87,11 +110,43 @@
 }
 
 .home .home-content .text-3 {
-  font-size: 27px;
+  font-size: 40px;
+  margin: 5px 0;
 }
 
 .home .home-content .text-3 span {
   color: crimson;
   font-weight: 500;
+}
+
+@media (max-width: 947px) {
+  .max-width {
+    padding: 0 50px;
+  }
+  .menu-btn {
+    display: block;
+    z-index: 999;
+  }
+  .navbar .menu {
+    position: fixed;
+    height: 100vh;
+    width: 100%;
+    left: -100%;
+    top: 0;
+    background: #111;
+    text-align: center;
+    padding-top: 80px;
+  }
+  .navbar .menu li {
+    display: block;
+  }
+  .navbar .menu li a {
+    display: inline-block;
+    margin: 20px 0;
+    font-size: 25px;
+  }
+  .navbar .menu.active {
+    left: 0;
+  }
 }
 /*# sourceMappingURL=style.css.map */
