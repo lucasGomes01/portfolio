@@ -304,8 +304,25 @@ section {
     font-size: 23px;
     padding: 10px 30px;
   }
-  .abount .about-content .column {
-    width: 50%;
+  .max-width {
+    max-width: 800px;
+  }
+  .about .about-content .column {
+    width: 100%;
+  }
+  .about .about-content .left {
+    display: -webkit-box;
+    display: -ms-flexbox;
+    display: flex;
+    -webkit-box-pack: center;
+        -ms-flex-pack: center;
+            justify-content: center;
+    margin-top: 0 auto 60px;
+  }
+  .about .about-content .right {
+    -webkit-box-flex: 100%;
+        -ms-flex: 100%;
+            flex: 100%;
   }
 }
 
