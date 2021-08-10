@@ -1,3 +1,4 @@
+@charset "UTF-8";
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&family=Ubuntu:wght@400;500;700&display=swap");
 * {
   padding: 0;
@@ -11,6 +12,10 @@
   max-width: 1300px;
   padding: 0 80px;
   margin: auto;
+}
+
+.about, .services {
+  font-family: 'Poppins', sans-serif;
 }
 
 .navbar {
@@ -142,11 +147,7 @@ section {
   padding: 100px 0;
 }
 
-.about {
-  font-family: 'Poppins', sans-serif;
-}
-
-.about .title {
+section .title {
   position: relative;
   text-align: center;
   font-size: 40px;
@@ -156,7 +157,32 @@ section {
   font-family: 'Ubuntu', sans-serif;
 }
 
-.about .about-content {
+section .title::before {
+  content: "";
+  position: absolute;
+  bottom: 0px;
+  left: 50%;
+  width: 180px;
+  height: 3px;
+  background: #111;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+}
+
+section .title::after {
+  position: absolute;
+  bottom: -12px;
+  left: 50%;
+  font-size: 20px;
+  color: crimson;
+  padding: 5px;
+  background: #fff;
+  -webkit-transform: translateX(-50%);
+          transform: translateX(-50%);
+}
+
+.about .about-content,
+.services .serv-content {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -170,11 +196,13 @@ section {
           justify-content: space-between;
 }
 
-.about .about-content .left {
+.about .about-content .left,
+.services .serv-content .left {
   width: 45%;
 }
 
-.about .about-content .left img {
+.about .about-content .left img,
+.services .serv-content .left img {
   height: 400px;
   width: 400px;
   -o-object-fit: cover;
@@ -182,25 +210,30 @@ section {
   border-radius: 6px;
 }
 
-.about .about-content .right {
+.about .about-content .right,
+.services .serv-content .right {
   width: 55%;
 }
 
-.about .about-content .right .text {
+.about .about-content .right .text,
+.services .serv-content .right .text {
   font-size: 25px;
   font-weight: 600;
   margin-bottom: 10px;
 }
 
-.about .about-content .right .text span {
+.about .about-content .right .text span,
+.services .serv-content .right .text span {
   color: crimson;
 }
 
-.about .about-content .right p {
+.about .about-content .right p,
+.services .serv-content .right p {
   text-align: justify;
 }
 
-.about .about-content .right a {
+.about .about-content .right a,
+.services .serv-content .right a {
   display: inline-block;
   color: #fff;
   background: crimson;
@@ -214,34 +247,60 @@ section {
   transition: all 0.3 ease;
 }
 
-.about .about-content .right a:hover {
+.about .about-content .right a:hover,
+.services .serv-content .right a:hover {
   color: crimson;
   background: none;
 }
 
-.about .title::before {
-  content: "";
-  position: absolute;
-  bottom: 0px;
-  left: 50%;
-  width: 180px;
-  height: 3px;
-  background: #111;
-  -webkit-transform: translateX(-50%);
-          transform: translateX(-50%);
-}
-
 .about .title::after {
   content: "who i am";
-  position: absolute;
-  bottom: -12px;
-  left: 50%;
-  font-size: 20px;
+}
+
+.services {
+  color: #fff;
+  background: #111;
+}
+
+.services .serv-content .card {
+  width: calc(33% - 20px);
+  background: #222;
+  text-align: center;
+  border-radius: 6px;
+  padding: 20px 25px;
+  cursor: pointer;
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.services .serv-content .card .box {
+  -webkit-transition: all 0.3s ease;
+  transition: all 0.3s ease;
+}
+
+.services .serv-content .card i {
+  font-size: 50px;
   color: crimson;
-  padding: 5px;
+}
+
+.services .serv-content .card .text {
+  font-size: 25px;
+  font-weight: 500;
+  margin: 10px 0 7px 0;
+}
+
+.services .title::before {
   background: #fff;
-  -webkit-transform: translateX(-50%);
-          transform: translateX(-50%);
+}
+
+.services .title::after {
+  background: #111;
+  content: "O que eu faço";
+}
+
+.services .serv-content .card:hover .box {
+  -webkit-transform: scale(1.05);
+          transform: scale(1.05);
 }
 
 @media (max-width: 1300px) {
