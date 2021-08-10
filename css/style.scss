@@ -11,9 +11,7 @@
   padding: 0 80px;
   margin: auto;
 }
-.about, .services {
-  font-family: 'Poppins', sans-serif;
-}
+
 
 // navbar styling
 
@@ -121,6 +119,17 @@
 section{
   padding: 100px 0;
 }
+.about, .services, .skills {
+  font-family: 'Poppins', sans-serif;
+}
+.about .about-content,
+.services .serv-content,
+.skills .skills-content {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  justify-content: space-between;    
+}
 section .title {
   position: relative;
   text-align: center;
@@ -152,13 +161,7 @@ section .title::after {
 }
 
 // about section
-// .about {  
-.about .about-content,
-.services .serv-content {
-  display: flex;
-  flex-wrap: wrap;
-  align-items: center;
-  justify-content: space-between;    
+.about .about-content {   
   .left {
     width: 45%;
     img {
@@ -199,12 +202,26 @@ section .title::after {
     }
   }
 }
-
 .about .title::after {
   content: "who i am";
 }
 
-// services section
+// skills section style
+.skills .title::after {
+  content: "What i know";
+}
+.skills .skills-content {
+  .column {
+    width: calc(50% - 30px);
+  }
+  .left .text {
+    font-size: 25px;
+    font-weight: 600;
+    margin-bottom: 10px;
+  }
+}
+
+// services section style
 .services {
   color: #fff;
   background: #111;
@@ -236,6 +253,9 @@ section .title::after {
 .services .title::after {
   background: #111;
   content: "O que eu faço";
+}
+.services .serv-content .card:hover {
+  background: #333;
 }
 .services .serv-content .card:hover .box{
   transform: scale(1.05);
@@ -320,6 +340,10 @@ section .title::after {
   .about .about-content .right {
     flex: 100%;
   }
+  .services .serv-content .card {
+    width: calc(50% - 10px);
+    margin-bottom: 20px;
+  }
 }
 
 @media (max-width: 690px){
@@ -337,6 +361,9 @@ section .title::after {
       font-size: 20px;
       padding: 9px 25px;
     }
+  }
+  .services .serv-content .card {
+    width: 100%
   }
 }
 @media (max-width: 500px){
