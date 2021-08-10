@@ -252,16 +252,111 @@ section .title::after {
 
 .skills .title::after {
   content: "What i know";
+  color: crimson;
+  background: #111;
+}
+
+.skills {
+  background: #111;
+}
+
+.skills .title {
+  color: #fff;
 }
 
 .skills .skills-content .column {
   width: calc(50% - 30px);
 }
 
+.skills .skills-content .left p {
+  text-align: justify;
+  color: #fff;
+}
+
+.skills .skills-content .left a {
+  display: inline-block;
+  color: #fff;
+  background: crimson;
+  font-size: 20px;
+  font-weight: 500;
+  padding: 8px 16px;
+  margin-top: 20px;
+  border-radius: 6px;
+  border: 2px solid crimson;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+}
+
 .skills .skills-content .left .text {
+  color: #fff;
   font-size: 25px;
   font-weight: 600;
   margin-bottom: 10px;
+}
+
+.skills .skills-content .right .bars {
+  margin-bottom: 15px;
+}
+
+.skills .skills-content .right .info {
+  color: #fff;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  margin-bottom: 5px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.skills .skills-content .right span {
+  font-weight: 500;
+  font-size: 18px;
+}
+
+.skills .skills-content .right .line {
+  height: 5px;
+  width: 100%;
+  background: lightgrey;
+  position: relative;
+}
+
+.skills .skills-content .left a:hover {
+  color: crimson;
+  background: none;
+}
+
+.skills .skills-content .right .line::before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 80%;
+  left: 0;
+  top: 0;
+  background: crimson;
+}
+
+.skills .skills-content .right .html::before {
+  width: 90%;
+}
+
+.skills .skills-content .right .css::before {
+  width: 85%;
+}
+
+.skills .skills-content .right .javaScript::before {
+  width: 90%;
+}
+
+.skills .skills-content .right .typeScript::before {
+  width: 80%;
+}
+
+.skills .skills-content .right .mysql::before {
+  width: 70%;
 }
 
 .services {
@@ -397,6 +492,10 @@ section .title::after {
   .services .serv-content .card {
     width: calc(50% - 10px);
     margin-bottom: 20px;
+  }
+  .skills .skills-content .column {
+    width: 100%;
+    margin-bottom: 35px;
   }
 }
 

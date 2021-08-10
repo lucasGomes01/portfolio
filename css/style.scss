@@ -209,18 +209,94 @@ section .title::after {
 // skills section style
 .skills .title::after {
   content: "What i know";
+  color: crimson;
+  background: #111;
+}
+.skills {
+  background: #111; 
+  .title {
+    color: #fff;
+  }
 }
 .skills .skills-content {
   .column {
     width: calc(50% - 30px);
   }
-  .left .text {
-    font-size: 25px;
-    font-weight: 600;
-    margin-bottom: 10px;
+  .left {
+    p {
+      text-align: justify;
+      color: #fff;
+    }
+    a {
+      display: inline-block;
+      color: #fff;
+      background: crimson;
+      font-size: 20px;
+      font-weight: 500;
+      padding: 8px 16px;
+      margin-top: 20px;
+      border-radius: 6px;
+      border: 2px solid crimson;
+      transition: all 0.3 ease;
+    }
+    .text {
+      color: #fff;
+      font-size: 25px;
+      font-weight: 600;
+      margin-bottom: 10px;
+    }
   }
+  .right {
+    .bars {
+      margin-bottom: 15px;
+    }
+    .info {
+      color: #fff;
+      display: flex;
+      margin-bottom: 5px;
+      align-items: center;
+      justify-content: space-between;
+    }
+    span {      
+      font-weight: 500;
+      font-size: 18px;
+    }
+    .line {
+      height: 5px;
+      width: 100%;
+      background: lightgrey;
+      position: relative;
+    }
+  } 
 }
-
+.skills .skills-content .left a:hover {
+  color: crimson;
+  background: none;
+}
+.skills .skills-content .right .line::before {
+  content: "";
+  position: absolute;
+  height: 100%;
+  width: 80%;
+  left: 0;
+  top: 0;
+  background: crimson;
+}
+.skills .skills-content .right .html::before {
+  width: 90%;
+}
+.skills .skills-content .right .css::before {
+  width: 85%;
+}
+.skills .skills-content .right .javaScript::before {
+  width: 90%;
+}
+.skills .skills-content .right .typeScript::before {
+  width: 80%;
+}
+.skills .skills-content .right .mysql::before {
+  width: 70%;
+}
 // services section style
 .services {
   color: #fff;
@@ -344,6 +420,10 @@ section .title::after {
     width: calc(50% - 10px);
     margin-bottom: 20px;
   }
+  .skills .skills-content .column {
+    width: 100%;
+    margin-bottom: 35px;
+  }
 }
 
 @media (max-width: 690px){
@@ -364,7 +444,7 @@ section .title::after {
   }
   .services .serv-content .card {
     width: 100%
-  }
+  } 
 }
 @media (max-width: 500px){
   .max-width {
