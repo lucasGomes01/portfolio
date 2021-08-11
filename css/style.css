@@ -372,6 +372,9 @@ section .title::after {
   background: #e4e4e4;
   border-radius: 6px;
   padding: 25px 35px;
+  text-align: center;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
 }
 
 .formation .carousel .card img {
@@ -381,10 +384,81 @@ section .title::after {
      object-fit: cover;
   border-radius: 50%;
   border: 5px solid crimson;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+}
+
+.formation .carousel .card .box {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+}
+
+.formation .carousel .card .text {
+  font-size: 25px;
+  font-weight: 500;
+  margin: 10px 0 7px 0;
+}
+
+.owl-dots {
+  text-align: center;
+  margin-top: 20px;
+}
+
+.owl-dot {
+  height: 13px;
+  width: 13px;
+  margin: 0 5px;
+  outline: none !important;
+  border-radius: 50%;
+  border: 2px solid crimson !important;
+  -webkit-transition: all 0.3 ease;
+  transition: all 0.3 ease;
+}
+
+.owl-dot.active {
+  width: 35px;
+  border-radius: 14px;
+}
+
+.owl-dot.active,
+.owl-dot:hover {
+  background: crimson !important;
+}
+
+.formation .carousel .card:hover {
+  background: crimson;
+}
+
+.formation .carousel .card:hover .box {
+  -webkit-transform: scale(1.05);
+          transform: scale(1.05);
+}
+
+.formation .carousel .card:hover img {
+  border-color: #fff;
+}
+
+.services {
+  color: #fff;
+  background: #111;
 }
 
 .services .serv-content .card {
   width: calc(33% - 20px);
+  background: #222;
   text-align: center;
   border-radius: 6px;
   padding: 20px 25px;
@@ -409,7 +483,12 @@ section .title::after {
   margin: 10px 0 7px 0;
 }
 
+.services .title::before {
+  background: #fff;
+}
+
 .services .title::after {
+  background: #111;
   content: "O que eu faço";
 }
 
