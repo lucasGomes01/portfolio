@@ -282,6 +282,9 @@ section .title::after {
   top: 0;
   background: crimson;
 }
+.skills .title::before{
+  background: #fff;
+}
 .skills .skills-content .right .html::before {
   width: 90%;
 }
@@ -299,11 +302,11 @@ section .title::after {
 }
 // services section style
 .services {
-  color: #fff;
-  background: #111;
+  // color: #fff;
+  // background: #111;
   .serv-content .card {
     width: calc(33% - 20px);
-    background: #222;
+    // background: #222;
     text-align: center;
     border-radius: 6px;
     padding: 20px 25px;
@@ -324,14 +327,14 @@ section .title::after {
   }
 }
 .services .title::before{
-  background: #fff;
+  // background: #fff;
 }
 .services .title::after {
-  background: #111;
+  // background: #111;
   content: "O que eu faço";
 }
 .services .serv-content .card:hover {
-  background: #333;
+  background: rgb(214, 33, 33);
 }
 .services .serv-content .card:hover .box{
   transform: scale(1.05);
