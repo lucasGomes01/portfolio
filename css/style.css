@@ -143,13 +143,14 @@ section {
   padding: 100px 0;
 }
 
-.about, .services, .skills, .formation {
+.about, .services, .skills, .formation, .contact {
   font-family: 'Poppins', sans-serif;
 }
 
 .about .about-content,
 .services .serv-content,
-.skills .skills-content {
+.skills .skills-content,
+.contact .contact-content {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
@@ -499,6 +500,39 @@ section .title::after {
 .services .serv-content .card:hover .box {
   -webkit-transform: scale(1.05);
           transform: scale(1.05);
+}
+
+.contact .title::after {
+  content: "Get in touth";
+  color: crimson;
+}
+
+.contact .contact-content .text {
+  font-size: 20px;
+  font-weight: 600;
+  margin-bottom: 10px;
+}
+
+.contact .contact-content .left p {
+  text-align: justify;
+}
+
+.contact .contact-content .left .icons {
+  margin: 10px 0;
+}
+
+.contact .contact-content .row {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  height: 65px;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+}
+
+.contact .contact-content .row .info {
+  margin-left: 30px;
 }
 
 @media (max-width: 1300px) {
