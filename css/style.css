@@ -86,13 +86,20 @@
   display: none;
 }
 
+#particles-js {
+  margin: 0;
+  padding: 0;
+  width: 100%;
+  height: 100%;
+}
+
 .home {
   display: -webkit-box;
   display: -ms-flexbox;
   display: flex;
-  background: url("../images/banner.jpg") no-repeat center;
+  background: #111;
   height: 100vh;
-  color: #fff;
+  color: white;
   min-height: 500px;
   font-family: 'Ubuntu', sans-serif;
 }
@@ -533,6 +540,19 @@ section .title::after {
 
 .contact .contact-content .row .info {
   margin-left: 30px;
+}
+
+.contact .contact-content .row .info .head {
+  font-weight: 500;
+}
+
+.contact .contact-content .row .info .sub-title {
+  color: #333;
+}
+
+.contact .contact-content .row i {
+  font-size: 25px;
+  color: crimson;
 }
 
 @media (max-width: 1300px) {
