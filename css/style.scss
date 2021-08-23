@@ -123,7 +123,6 @@ body {
 }
 
 .home {
-  // z-index: 2;
   display: flex;
   // background: #111;
   height: 100vh;
@@ -176,6 +175,7 @@ section{
   font-family: 'Poppins', sans-serif;
 }
 .about .about-content,
+.formation .formation-content,
 .services .serv-content,
 .skills .skills-content,
 .contact .contact-content{
@@ -362,63 +362,139 @@ section .title::after {
   content: "What i know";
   color: crimson;
 }
-.formation .carousel .card {
-  background: rgb(228, 228, 228);
-  border-radius: 6px;
-  padding: 25px 35px;
-  text-align: center;
-  transition: all 0.3 ease;
-  img {
+
+// .formation .principal .card {
+//   height: 150px;
+//   width: 500px;
+//   background: rgb(228, 228, 228);
+//   padding: 20px 30px;
+
+//   .box {
+//     width: 440px;
+//     height: 100%;
+//     background: #fff;
+//     display: flex;
+//     align-items: center;
+
+//     img {
+//       height: 100px;
+//       width: 100px;
+//       margin: 5px;
+//       object-fit: cover;
+//     }
+//     .container {
+//       width: 100%;     
+//       // background-color: #333;
+//       margin-left: 20px;
+//       font-size: 15px;      
+//       .text {
+//         font-weight: 500;
+        
+//         margin-bottom: 10px;
+//         // color:#fff;
+//         // font-size: 20px;
+//       }
+//       p {
+//         font-size: 15px;
+//       }
+//     }
+//   }
+// }
+.formation {
+  .formation-content .card {
+    width: calc(50% - 20px);
     height: 150px;
-    width: 150px;
-    object-fit: cover;
-    border-radius: 50%;
-    border: 5px solid crimson;
-    transition: all 0.3 ease;
+    background: #333;
+    text-align: center;
+    border-radius: 6px;
+    padding: 15px 20px;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    .box {
+      height: 100%;
+      background-color: #fff;
+      display: flex;
+      align-items: center;
+      transition: all 0.3s ease;
+      img {
+        height: 100px;
+        width: 100px;
+        margin: 5px;
+        object-fit: cover;
+      }
+      .container {
+        width: 100%;     
+        // background-color: #333;
+        font-size: 15px;      
+        .text {
+          font-weight: 500;          
+          // margin-bottom: 10px;
+          margin: 10px 0 7px 0;
+        }
+        p {
+          font-size: 15px;
+        }
+      }
+    }
   }
-  .box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3 ease;
-  }
-  .text {
-    font-size: 25px;
-    font-weight: 500;
-    margin: 10px 0 7px 0;
-  }
 }
-.owl-dots {
-  text-align: center;
-  margin-top: 20px;
-}
-.owl-dot {
-  height: 13px;
-  width: 13px;
-  margin: 0 5px;
-  outline: none !important;
-  border-radius: 50%;
-  border: 2px solid crimson !important;
-  transition: all 0.3 ease;
-}
-.owl-dot.active {
-  width: 35px;
-  border-radius: 14px;
-}
-.owl-dot.active,
-.owl-dot:hover {
-  background: crimson !important;
-}
-.formation .carousel .card:hover {
-  background: crimson;
-}
-.formation .carousel .card:hover .box {
-  transform: scale(1.05);
-}
-.formation .carousel .card:hover img {
-  border-color: #fff;
-}
+// .formation .carousel .card {
+//   background: rgb(228, 228, 228);
+//   border-radius: 6px;
+//   padding: 25px 35px;
+//   text-align: center;
+//   transition: all 0.3 ease;
+//   img {
+//     height: 150px;
+//     width: 150px;
+//     object-fit: cover;
+//     border-radius: 50%;
+//     border: 5px solid crimson;
+//     transition: all 0.3 ease;
+//   }
+//   .box {
+//     display: flex;
+//     flex-direction: column;
+//     align-items: center;
+//     justify-content: center;
+//     transition: all 0.3 ease;
+//   }
+//   .text {
+//     font-size: 25px;
+//     font-weight: 500;
+//     margin: 10px 0 7px 0;
+//   }
+// }
+// .owl-dots {
+//   text-align: center;
+//   margin-top: 20px;
+// }
+// .owl-dot {
+//   height: 13px;
+//   width: 13px;
+//   margin: 0 5px;
+//   outline: none !important;
+//   border-radius: 50%;
+//   border: 2px solid crimson !important;
+//   transition: all 0.3 ease;
+// }
+// .owl-dot.active {
+//   width: 35px;
+//   border-radius: 14px;
+// }
+// .owl-dot.active,
+// .owl-dot:hover {
+//   background: crimson !important;
+// }
+// .formation .carousel .card:hover {
+//   background: crimson;
+// }
+// .formation .carousel .card:hover .box {
+//   transform: scale(1.05);
+// }
+// .formation .carousel .card:hover img {
+//   border-color: #fff;
+// }
 
 // services section style
 .services {
@@ -665,6 +741,10 @@ footer span a:hover {
   .about .about-content .right {
     flex: 100%;
   }
+  .formation .formation-content .card {
+    width: calc(50% - 10px);
+    margin-bottom: 20px;
+  }
   .services .serv-content .card {
     width: calc(50% - 10px);
     margin-bottom: 20px;
@@ -691,6 +771,9 @@ footer span a:hover {
       font-size: 20px;
       padding: 9px 25px;
     }
+  }
+  .formation .formation-content .card {
+    width: 100%
   }
   .services .serv-content .card {
     width: 100%
