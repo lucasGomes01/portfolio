@@ -8,10 +8,6 @@ $(document).ready(function(){
       $('.scroll-up-btn').addClass("show");
     } else {
       $('.scroll-up-btn').removeClass("show");
-    } if (this.scrollY < 600) {
-      $('#particles-js').addClass("none");
-    } else {
-      $('#particles-js').removeClass("none");
     }
   });
 

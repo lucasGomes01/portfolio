@@ -20,6 +20,17 @@ body {
   margin: auto;
 }
 
+// colors 
+$backgroundSecondary: linear-gradient(270deg,#121214,#09090a);
+$background:#121214;
+$primary: linear-gradient(to right, #6a11cb 0%, #2575fc 100%);
+$secondary: #6a11cb;
+$tertiary: #8615ff;
+$text: #e1e1e6;
+//  linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+// linear-gradient(to right, #4facfe 0%, #00f2fe 100%);
+// $primary: linear-gradient(180deg, rgb(184, 35, 221), rgb(149, 79, 240));
+
 
 // navbar styling
 
@@ -41,7 +52,7 @@ body {
     font-size: 35px;
     font-weight: 600;
     span{
-      color:crimson;
+      color: $primary;
       transition: color 0.3s ease;
     }
   }
@@ -56,23 +67,24 @@ body {
       transition: color 0.3s ease;
     }
     a:hover {
-      color: crimson;
+      color: $secondary;
     }
   }
 }
 .sticky {
   padding: 15px 0;
-  background: crimson;
+  backdrop-filter: saturate(180%) blur(20px);
+  background: rgba(0,0,0,.5);
   .logo a span{
-    color: #fff;
+    color: $text
   }
   .menu li a:hover {
-    color: #fff;
+    color: $text;
   }
 }
 // menu btn styling
 .menu-btn {
-  color:#fff;
+  color:$text;  
   font-size: 23px;
   cursor: pointer;
   display: none;
@@ -82,7 +94,7 @@ body {
   position: fixed;
   height: 45px;
   width: 42px;
-  background: crimson;
+  background: $secondary;
   right: 30px;
   bottom: 30px;
   text-align: center;
@@ -105,21 +117,13 @@ body {
 #particles-js {
   width: 100%;
   height: 100%;
-  background: #111;
+  background: linear-gradient(270deg,#09090a, #121214);
   background-size: cover;
   background-position: 50% 50%;
   position: fixed;
   top: 0px;
   z-index: -1;
 
-}
-.background {
-  opacity: 0;
-  pointer-events: none;
-}
-.background.none {
-  opacity: 1;
-  pointer-events: auto;
 }
 
 .home {
@@ -145,29 +149,29 @@ body {
       font-size: 40px;
       margin: 5px 0;
       span {
-        color: crimson;
+        color: $tertiary;
         font-weight: 500;
       }
     }
     a {
       display: inline-block;
       color: #fff;
-      background: crimson;
+      background: $secondary;
       font-size: 25px;
       padding: 12px 36px;
       margin-top: 20px;
       border-radius: 6px;
-      border: 2px solid crimson;
+      border: 2px solid $secondary;
       transition: all 0.3 ease;
     }
     a:hover{
-      color: crimson;
+      color: $secondary;
       background: none;
     }
   }
 }
 
-// similar stylin
+// similar styling
 section{
   padding: 100px 0;
 }
@@ -185,6 +189,7 @@ section{
   justify-content: space-between;    
 }
 section .title {
+  color: $text;
   position: relative;
   text-align: center;
   font-size: 40px;
@@ -200,7 +205,7 @@ section .title::before {
   left: 50%;
   width: 180px;
   height: 3px;
-  background: #111;
+  background: $text;
   transform: translateX(-50%);
 }
 section .title::after {
@@ -208,15 +213,15 @@ section .title::after {
   bottom: -12px;
   left: 50%;
   font-size: 20px;
-  color: crimson;
+  color: $tertiary;
   padding: 5px;
-  background: #fff;
+  background: $background;
   transform: translateX(-50%);
 }
 
 // about section
 .about {
-  background: #fff;
+  background: $background;
 }
 .about .about-content {   
   .left {
@@ -231,30 +236,32 @@ section .title::after {
   .right {
     width: 55%;
     .text {
+      color: $text;
       font-size: 25px;
       font-weight: 600;
       margin-bottom: 10px;
       span {
-        color: crimson;
+        color: $tertiary;
       }
     }
     p {
+      color: $text;
       text-align: justify;
     }
     a {
       display: inline-block;
-      color: #fff;
-      background: crimson;
+      color: $text;
+      background: $secondary;
       font-size: 20px;
       font-weight: 500;
       padding: 10px 30px;
       margin-top: 20px;
       border-radius: 6px;
-      border: 2px solid crimson;
+      border: 2px solid $secondary;
       transition: all 0.3 ease;
     }
     a:hover {
-      color: crimson;
+      color: $secondary;
       background: none;
     }
   }
@@ -266,13 +273,13 @@ section .title::after {
 // skills section style
 .skills .title::after {
   content: "What i know";
-  color: crimson;
+  color: $tertiary;
   background: #111;
 }
 .skills {
-  background: #111; 
+  background: $backgroundSecondary; 
   .title {
-    color: #fff;
+    color: $text;
   }
 }
 .skills .skills-content {
@@ -282,22 +289,22 @@ section .title::after {
   .left {
     p {
       text-align: justify;
-      color: #fff;
+      color: $text;
     }
     a {
       display: inline-block;
-      color: #fff;
-      background: crimson;
+      color: $text;
+      background: $secondary;
       font-size: 20px;
       font-weight: 500;
       padding: 8px 16px;
       margin-top: 20px;
       border-radius: 6px;
-      border: 2px solid crimson;
+      border: 2px solid $secondary;
       transition: all 0.3 ease;
     }
     .text {
-      color: #fff;
+      color: $text;
       font-size: 25px;
       font-weight: 600;
       margin-bottom: 10px;
@@ -308,7 +315,7 @@ section .title::after {
       margin-bottom: 15px;
     }
     .info {
-      color: #fff;
+      color: $text;
       display: flex;
       margin-bottom: 5px;
       align-items: center;
@@ -327,7 +334,7 @@ section .title::after {
   } 
 }
 .skills .skills-content .left a:hover {
-  color: crimson;
+  color: $secondary;
   background: none;
 }
 .skills .skills-content .right .line::before {
@@ -337,7 +344,7 @@ section .title::after {
   width: 80%;
   left: 0;
   top: 0;
-  background: crimson;
+  background: $primary;
 }
 .skills .title::before{
   background: #fff;
@@ -357,75 +364,42 @@ section .title::after {
 .skills .skills-content .right .mysql::before {
   width: 70%;
 }
+
 // formation section
 .formation .title::after {
   content: "What i know";
-  color: crimson;
+  color: $secondary;
 }
-// .formation {
-//   height: 100%;
-//   .formation-content .card {
-//     width: calc(50% - 20px);
-//     height: 150px;
-//     background: rgb(245, 78, 78);
-//     text-align: center;
-//     border-radius: 6px;
-//     padding: 15px 20px;
-//     cursor: pointer;
-//     transition: all 0.3s ease;
-//     .box {
-//       height: 100%;
-//       // background-color: rgb(245, 88, 88);
-//       display: flex;
-//       align-items: center;
-//       transition: all 0.3s ease;
-//       img {
-//         height: 100px;
-//         width: 100px;
-//         object-fit: cover;
-//         background: #fff;
-//       }
-//       .container {
-//         width: 100%;     
-//         // background-color: #333;
-//         font-size: 15px;      
-//         .text {
-//           font-weight: 500;          
-//           // margin-bottom: 10px;
-//           margin: 10px 0 7px 0;
-//         }
-//         p {
-//           font-size: 15px;
-//         }
-//       }
-//     }
-//   }
-// }
-.formation .carousel .card {
-  background: rgb(228, 228, 228);
-  border-radius: 6px;
-  padding: 25px 35px;
-  text-align: center;
-  transition: all 0.3 ease;
-  img {
-    height: 150px;
-    width: 150px;
-    object-fit: cover;
-    border-radius: 50%;
-    border: 5px solid crimson;
+
+.formation{
+  background: $background;
+  .carousel .card {
+    background: #333;
+    border-radius: 6px;
+    padding: 25px 35px;
+    text-align: center;
     transition: all 0.3 ease;
-  }
-  .box {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    transition: all 0.3 ease;
-  }
-  .text {
-    font-size: 25px;
-    font-weight: 500;
-    margin: 10px 0 7px 0;
+    img {
+      height: 150px;
+      width: 150px;
+      object-fit: cover;
+      border-radius: 50%;
+      border: 5px solid $tertiary;
+      transition: all 0.3 ease;
+    }
+    .box {
+      color: $text;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.3 ease;
+    }
+    .text {
+      font-size: 25px;
+      font-weight: 500;
+      margin: 10px 0 7px 0;
+    }
   }
 }
 .owl-dots {
@@ -438,7 +412,7 @@ section .title::after {
   margin: 0 5px;
   outline: none !important;
   border-radius: 50%;
-  border: 2px solid crimson !important;
+  border: 2px solid $secondary !important;
   transition: all 0.3 ease;
 }
 .owl-dot.active {
@@ -447,16 +421,16 @@ section .title::after {
 }
 .owl-dot.active,
 .owl-dot:hover {
-  background: crimson !important;
+  background: $secondary !important;
 }
 .formation .carousel .card:hover {
-  background: crimson;
+  background: $secondary;
 }
 .formation .carousel .card:hover .box {
   transform: scale(1.05);
 }
 .formation .carousel .card:hover img {
-  border-color: #fff;
+  border-color: $text
 }
 
 // services section style
@@ -476,7 +450,7 @@ section .title::after {
     }
     i {
       font-size: 50px;
-      color: crimson;
+      color: $secondary;
     }
     .text {
       font-size: 25px;
@@ -493,7 +467,7 @@ section .title::after {
   content: "O que eu faço";
 }
 .services .serv-content .card:hover {
-  background: rgb(214, 33, 33);
+  background: $secondary;
 }
 .services .serv-content .card:hover .box{
   transform: scale(1.05);
@@ -502,9 +476,10 @@ section .title::after {
 //contact style
 .contact .title::after {
   content: "Get in touth";
-  color: crimson;
+  color: $text;
 }
 .contact {
+  background: $background;
   .right {
     form {
       .textarea {
@@ -526,6 +501,7 @@ section .title::after {
           width: 100%;
           margin-bottom: 15px;
           input {
+              background: $text;
               height: 100%;
               width: 100%;
               border: 1px solid lightgray;
@@ -546,9 +522,9 @@ section .title::after {
       button {
         width: 100%;
         height: 100%;
-        border: 2px solid crimson;
-        background: crimson;
-        color: #fff;
+        border: 2px solid $secondary;
+        background: $secondary;
+        color: $text;
         font-size: 20px;
         font-weight: 500;
         border-radius: 6px;
@@ -559,6 +535,7 @@ section .title::after {
     .textarea textarea {
       height: 100%;
       width: 100%;
+      background: $text;
       border: 1px solid lightgray;
       border-radius: 6px;
       outline: none;
@@ -571,7 +548,7 @@ section .title::after {
     }
   }
   .contact .right form .button button:hover {
-    color: crimson;
+    color: $secondary;
     background: none;
   }
   .contact-content {
@@ -579,12 +556,14 @@ section .title::after {
       width: calc(50% - 30px);
     }
     .text {
+      color: $text;
       font-size: 20px;
       font-weight: 600;
       margin-bottom: 10px;
     }
     .left {
       p {
+        color: $text;
         text-align: justify;
       }
       .icons {
@@ -596,28 +575,30 @@ section .title::after {
       height: 65px;
       align-items: center;
       .info {
+        color: $text;
         margin-left: 30px;
         .head {
           font-weight: 500;
         }
         .sub-title {
-          color: #333;
+          color: $text;
         }
       }
       i {
         font-size: 25px;
-        color: crimson;
+        color: $secondary;
       }
     }
   }
 
   // footer style
 footer {
-  background-color: #111;
+  background: $backgroundSecondary;
   padding: 20px 23px;
-  color: #fff;
+  color: $text;
+  text-align: center;
   span a {
-    color: crimson;
+    color: $secondary;
     text-decoration: none;
   }
 }
@@ -689,6 +670,7 @@ footer span a:hover {
       padding: 10px 30px;
     }
   }
+
   // about
   .max-width {
     max-width: 800px;
@@ -742,6 +724,7 @@ footer span a:hover {
     width: 100%
   } 
 }
+
 @media (max-width: 500px){
   .max-width {
     padding: 0 23px;
