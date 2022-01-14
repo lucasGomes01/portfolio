@@ -84,7 +84,11 @@ body {
 }
 
 .sticky .logo a span {
-  color: #e1e1e6;
+  color: #6a11cb;
+}
+
+.sticky .menu li a {
+  color: #8615ff;
 }
 
 .sticky .menu li a:hover {
@@ -433,6 +437,7 @@ section .title::after {
 }
 
 .formation .carousel .card {
+  min-height: 310px;
   background: #333;
   border-radius: 6px;
   padding: 25px 35px;
@@ -522,6 +527,7 @@ section .title::after {
 }
 
 .services .serv-content .card {
+  min-height: 210px;
   width: calc(33% - 20px);
   background: #222;
   text-align: center;
@@ -568,7 +574,7 @@ section .title::after {
 
 .contact .title::after {
   content: "Get in touth";
-  color: #e1e1e6;
+  color: #8615ff;
 }
 
 .contact {
