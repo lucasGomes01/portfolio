@@ -39,20 +39,32 @@
     "viewBtn": "View Project",
     "list": [
       {
-        "title": "Project 1",
-        "desc": "Test project description"
+        "title": "MentoriaAI",
+        "desc": "Intelligent mentoring platform developed with React, .NET, PostgreSQL, Elasticsearch and Docker. It connects users to mentors efficiently through semantic searches.",
+        "active": true,
+        "liveLink": "https://lucasgomes.dev/mentoria-ai",
+        "githubLink": "https://github.com/lucasGomes01/mentoria-ai"
       },
       {
-        "title": "Project 2",
-        "desc": "Test project description"
+        "title": "ChartMaker",
+        "desc": "Web application for creating and viewing dynamic charts. Developed with a focus on data analysis, allowing the generation of interactive and customizable dashboards simply and quickly.",
+        "active": true,
+        "liveLink": "https://lucasgomes.dev/chartmaker",
+        "githubLink": "https://github.com/lucasGomes01/chartmaker"
       },
       {
-        "title": "Project 3",
-        "desc": "Test project description"
+        "title": "LIDAR Visualizer",
+        "desc": "System for real-time visualization of LIDAR sensor data using ESP32 and C#. It converts distance readings into XY coordinates for graphical display and obstacle detection.",
+        "active": false,
+        "liveLink": "https://lucasgomes.dev/lidar",
+        "githubLink": "https://github.com/lucasGomes01/lidar"
       },
       {
-        "title": "Project 4",
-        "desc": "Test project description"
+        "title": "Smart Commerce App",
+        "desc": "Mobile application developed in React Native to promote local businesses. The system features dynamic listings, reviews, business hours, and API integration for data management.",
+        "active": false,
+        "liveLink": "https://lucasgomes.dev/smartcommerce",
+        "githubLink": "https://github.com/lucasGomes01/smartcommerce"
       }
     ]
   },

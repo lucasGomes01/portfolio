@@ -1,4 +1,4 @@
-import { Monitor, Code2, BarChart3, Layout, Lock, ExternalLink, X, Globe } from "lucide-react";
+import { Monitor, Code2, BarChart3, Layout, Lock, ExternalLink, X, Globe, ArrowRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import React, { useState, useEffect } from "react";
 
@@ -21,23 +21,41 @@ export function Projects() {
     <Monitor size={28} className="text-[#10B981]" />,
   ];
 
-  const projectsList: Array<{ title: string; desc: string }> = t("projects.list", { returnObjects: true });
+  const projectsList: Array<{ title: string; desc: string; active?: boolean; liveLink?: string; githubLink?: string }> = t("projects.list", { returnObjects: true });
+
+  const projectImages = [
+    "/projects/mentoria_ai.png",
+    "/projects/chart_maker.png",
+    "/projects/lidar_visualizer.png",
+    "/projects/smart_commerce.png"
+  ];
 
   const projects = projectsList.map((proj, index) => ({
     id: index + 1,
     title: proj.title,
     desc: proj.desc,
+    active: proj.active ?? false,
+    liveLink: proj.liveLink || "#",
+    githubLink: proj.githubLink || "#",
     icon: projectIcons[index] || <Layout size={28} className="text-[#10B981]" />,
+    image: projectImages[index],
+    gallery: [
+      projectImages[index],
+      projectImages[(index + 1) % 4],
+      projectImages[(index + 2) % 4],
+    ],
     // Placeholder tags for the modal
     tags: ["React", "TypeScript", "Tailwind CSS", "C#", ".NET"],
   }));
 
   const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
+  const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
   // Prevent background scrolling when modal is open
   useEffect(() => {
     if (selectedProject) {
       document.body.style.overflow = 'hidden';
+      setCurrentImageIndex(0);
     } else {
       document.body.style.overflow = 'unset';
     }
@@ -236,7 +254,7 @@ export function Projects() {
             </div>
 
             {/* Browser Content */}
-            <div className="relative" style={{ background: "#020c06", minHeight: "480px" }}>
+            <div className="relative overflow-y-auto [&::-webkit-scrollbar]:hidden" style={{ background: "#020c06", height: "480px" }}>
               {/* Grid bg */}
               <div className="absolute inset-0 pointer-events-none"
                 style={{
@@ -256,59 +274,55 @@ export function Projects() {
                     <div
                       key={project.id}
                       onClick={() => setSelectedProject(project)}
-                      className="group relative flex flex-col sm:flex-row items-center sm:items-start gap-4 p-5 rounded-lg cursor-pointer transition-all duration-300 hover:-translate-y-[2px]"
-                      style={{ background: "rgba(16,185,129,0.04)", border: "1px solid rgba(16,185,129,0.2)" }}
+                      className="group relative flex flex-col rounded-xl cursor-pointer transition-all duration-300 hover:-translate-y-[2px] overflow-hidden"
+                      style={{ background: "#060f0a", border: "1px solid rgba(16,185,129,0.15)" }}
                       data-aos="fade-up"
                       data-aos-delay={200 + index * 100}
                       onMouseEnter={e => {
-                        (e.currentTarget as HTMLElement).style.borderColor = "rgba(16,185,129,0.7)";
-                        (e.currentTarget as HTMLElement).style.background = "rgba(16,185,129,0.09)";
-                        (e.currentTarget as HTMLElement).style.boxShadow = "0 0 24px rgba(16,185,129,0.15), inset 0 0 20px rgba(16,185,129,0.05)";
+                        (e.currentTarget as HTMLElement).style.borderColor = "rgba(16,185,129,0.5)";
+                        (e.currentTarget as HTMLElement).style.boxShadow = "0 8px 30px rgba(16,185,129,0.12)";
                       }}
                       onMouseLeave={e => {
-                        (e.currentTarget as HTMLElement).style.borderColor = "rgba(16,185,129,0.2)";
-                        (e.currentTarget as HTMLElement).style.background = "rgba(16,185,129,0.04)";
+                        (e.currentTarget as HTMLElement).style.borderColor = "rgba(16,185,129,0.15)";
                         (e.currentTarget as HTMLElement).style.boxShadow = "none";
                       }}
                     >
-                      {/* Bottom accent */}
-                      <div className="absolute bottom-0 left-0 w-full h-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 rounded-b-lg"
-                        style={{ background: "linear-gradient(to right, transparent, #10B981, transparent)", boxShadow: "0 0 8px rgba(16,185,129,0.8)" }}
-                      />
-
-                      {/* Icon */}
-                      <div className="w-14 h-14 shrink-0 rounded-lg flex items-center justify-center transition-all duration-300 group-hover:scale-110"
-                        style={{ background: "rgba(0,0,0,0.5)", border: "1px solid rgba(16,185,129,0.25)" }}
-                      >
-                        {project.icon}
+                      {/* Project Image */}
+                      <div className="w-full h-44 overflow-hidden relative">
+                         <img src={project.image} alt={project.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                         <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
                       </div>
 
-                      {/* Text */}
-                      <div className="flex flex-col text-center sm:text-left w-full">
-                        <h3 className="text-white font-bold text-base group-hover:text-[#10B981] transition-colors">
+                      {/* Text Content */}
+                      <div className="flex flex-col p-5 flex-1">
+                        <h3 className="text-white font-bold text-[17px] mb-2 group-hover:text-[#10B981] transition-colors">
                           {project.title}
                         </h3>
-                        <p className="text-white/50 text-xs leading-relaxed mt-1 mb-3">{project.desc}</p>
-                        <button
-                          className="self-center sm:self-start text-[10px] font-bold uppercase tracking-wider text-[#10B981] px-3 py-1.5 rounded"
-                          style={{ border: "1px solid rgba(16,185,129,0.4)", background: "rgba(16,185,129,0.08)", transition: "all .25s" }}
-                          onMouseEnter={e => {
-                            (e.currentTarget as HTMLElement).style.background = "#10B981";
-                            (e.currentTarget as HTMLElement).style.color = "#000";
-                            (e.currentTarget as HTMLElement).style.boxShadow = "0 0 16px rgba(16,185,129,0.6)";
-                          }}
-                          onMouseLeave={e => {
-                            (e.currentTarget as HTMLElement).style.background = "rgba(16,185,129,0.08)";
-                            (e.currentTarget as HTMLElement).style.color = "#10B981";
-                            (e.currentTarget as HTMLElement).style.boxShadow = "none";
-                          }}
-                          onClick={(e) => {
-                             e.stopPropagation(); // Prevent card onClick from firing twice
-                             setSelectedProject(project);
-                          }}
-                        >
-                          {t("projects.viewBtn")} →
-                        </button>
+                        <p className="text-[#8c9f96] text-[13px] leading-relaxed mb-6 flex-1">
+                          {project.desc}
+                        </p>
+                        
+                        {/* Button */}
+                        <div className="mt-auto">
+                          <button
+                            className="text-[11px] font-bold uppercase tracking-[0.08em] text-[#10B981] px-4 py-2 rounded-md transition-all duration-300 flex items-center gap-1.5 w-fit"
+                            style={{ border: "1px solid rgba(16,185,129,0.4)", background: "transparent" }}
+                            onMouseEnter={e => {
+                              (e.currentTarget as HTMLElement).style.background = "rgba(16,185,129,0.08)";
+                              (e.currentTarget as HTMLElement).style.borderColor = "#10B981";
+                            }}
+                            onMouseLeave={e => {
+                              (e.currentTarget as HTMLElement).style.background = "transparent";
+                              (e.currentTarget as HTMLElement).style.borderColor = "rgba(16,185,129,0.4)";
+                            }}
+                            onClick={(e) => {
+                               e.stopPropagation();
+                               setSelectedProject(project);
+                            }}
+                          >
+                            {t("projects.viewBtn")} <ArrowRight size={14} />
+                          </button>
+                        </div>
                       </div>
                     </div>
                   ))}
@@ -386,11 +400,11 @@ export function Projects() {
           
           {/* Modal Content */}
           <div 
-            className="relative w-full max-w-2xl bg-gradient-to-b from-[#071712] to-[#030e08] rounded-2xl border border-[#10B981]/30 shadow-[0_20px_60px_rgba(16,185,129,0.15)] overflow-hidden flex flex-col transform transition-all animate-fade-in"
+            className="relative w-full max-w-5xl bg-gradient-to-b from-[#071712] to-[#030e08] rounded-2xl border border-[#10B981]/30 shadow-[0_20px_60px_rgba(16,185,129,0.15)] overflow-hidden flex flex-col transform transition-all animate-fade-in"
             style={{ maxHeight: '90vh' }}
           >
             {/* Header Area */}
-            <div className="p-6 md:p-8 flex items-start justify-between border-b border-[#10B981]/10 relative overflow-hidden">
+            <div className="p-6 md:p-8 flex items-start justify-between border-b border-[#10B981]/10 relative overflow-hidden shrink-0">
                {/* Decorative glow inside modal header */}
                <div className="absolute top-0 right-0 w-64 h-64 bg-[#10B981]/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/3 pointer-events-none" />
                
@@ -400,10 +414,12 @@ export function Projects() {
                  </div>
                  <div>
                    <h3 className="text-2xl font-bold text-white mb-1">{selectedProject.title}</h3>
-                   <div className="flex items-center gap-2">
-                     <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
-                     <span className="text-[#10B981]/80 text-xs font-mono uppercase tracking-widest">Active Project</span>
-                   </div>
+                   {selectedProject.active && (
+                     <div className="flex items-center gap-2">
+                       <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
+                       <span className="text-[#10B981]/80 text-xs font-mono uppercase tracking-widest">{t("projects.activeStatus", "Active Project")}</span>
+                     </div>
+                   )}
                  </div>
                </div>
 
@@ -416,48 +432,72 @@ export function Projects() {
             </div>
 
             {/* Body Area */}
-            <div className="p-6 md:p-8 overflow-y-auto">
-              <h4 className="text-white/90 text-lg font-semibold mb-3">About this project</h4>
-              <p className="text-white/60 text-sm leading-relaxed mb-8">
-                {selectedProject.desc}
-                <br /><br />
-                Aqui você pode descrever mais detalhes sobre o desafio técnico, a arquitetura escolhida e o impacto do projeto. Por enquanto, usamos a descrição base traduzida.
-              </p>
+            <div className="p-6 md:p-8 overflow-y-auto flex flex-col lg:flex-row gap-8">
+              
+              {/* Left Side: Carousel */}
+              <div className="flex-1 flex flex-col gap-4">
+                {/* Main Active Image */}
+                <div className="w-full aspect-video rounded-xl overflow-hidden border border-[#10B981]/20 shadow-[0_0_20px_rgba(16,185,129,0.1)]">
+                  <img src={selectedProject.gallery[currentImageIndex]} alt={selectedProject.title} className="w-full h-full object-cover transition-opacity duration-300" />
+                </div>
+                
+                {/* Thumbnails */}
+                <div className="flex gap-3 overflow-x-auto pb-2 [&::-webkit-scrollbar]:hidden">
+                  {selectedProject.gallery.map((img, i) => (
+                    <button
+                      key={i}
+                      onClick={() => setCurrentImageIndex(i)}
+                      className={`shrink-0 w-24 aspect-video rounded-lg overflow-hidden border-2 transition-colors duration-300 ${currentImageIndex === i ? 'border-[#10B981]' : 'border-transparent hover:border-[#10B981]/50'}`}
+                    >
+                      <img src={img} alt={`Preview ${i + 1}`} className="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity" />
+                    </button>
+                  ))}
+                </div>
+              </div>
 
-              <h4 className="text-white/90 text-lg font-semibold mb-3">Technologies</h4>
-              <div className="flex flex-wrap gap-2 mb-8">
-                {selectedProject.tags.map(tag => (
-                  <span 
-                    key={tag}
-                    className="px-3 py-1.5 rounded-md text-xs font-medium text-[#10B981]"
-                    style={{ background: "rgba(16,185,129,0.08)", border: "1px solid rgba(16,185,129,0.2)" }}
+              {/* Right Side: Info & Actions */}
+              <div className="w-full lg:w-[400px] flex flex-col">
+                <h4 className="text-white/90 text-lg font-semibold mb-3">About this project</h4>
+                <p className="text-white/60 text-sm leading-relaxed mb-8">
+                  {selectedProject.desc}
+                </p>
+
+                <h4 className="text-white/90 text-lg font-semibold mb-3">Technologies</h4>
+                <div className="flex flex-wrap gap-2 mb-8">
+                  {selectedProject.tags.map(tag => (
+                    <span 
+                      key={tag}
+                      className="px-3 py-1.5 rounded-md text-xs font-medium text-[#10B981]"
+                      style={{ background: "rgba(16,185,129,0.08)", border: "1px solid rgba(16,185,129,0.2)" }}
+                    >
+                      {tag}
+                    </span>
+                  ))}
+                </div>
+
+                {/* Action Buttons */}
+                <div className="flex flex-col gap-3 mt-auto pt-4">
+                  <a 
+                    href={selectedProject.liveLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full inline-flex items-center justify-center gap-2 bg-[#10B981] hover:bg-[#0ea5e9] text-[#020c06] text-sm font-bold px-6 py-3.5 rounded-xl transition-colors duration-300 shadow-[0_0_20px_rgba(16,185,129,0.3)]"
                   >
-                    {tag}
-                  </span>
-                ))}
+                    <Globe size={18} />
+                    Live Preview
+                  </a>
+                  <a 
+                    href={selectedProject.githubLink}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full inline-flex items-center justify-center gap-2 bg-transparent hover:bg-white/5 text-white text-sm font-semibold px-6 py-3.5 rounded-xl border border-white/20 hover:border-white/40 transition-colors duration-300"
+                  >
+                    <GithubIcon />
+                    Source Code
+                  </a>
+                </div>
               </div>
 
-              {/* Action Buttons */}
-              <div className="flex flex-col sm:flex-row gap-4 pt-2">
-                <a 
-                  href="#"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 inline-flex items-center justify-center gap-2 bg-[#10B981] hover:bg-[#0ea5e9] text-[#020c06] text-sm font-bold px-6 py-3.5 rounded-xl transition-colors duration-300 shadow-[0_0_20px_rgba(16,185,129,0.3)]"
-                >
-                  <Globe size={18} />
-                  Live Preview
-                </a>
-                <a 
-                  href="#"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="flex-1 inline-flex items-center justify-center gap-2 bg-transparent hover:bg-white/5 text-white text-sm font-semibold px-6 py-3.5 rounded-xl border border-white/20 hover:border-white/40 transition-colors duration-300"
-                >
-                  <GithubIcon />
-                  Source Code
-                </a>
-              </div>
             </div>
           </div>
         </div>

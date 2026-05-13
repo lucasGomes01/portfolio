@@ -43,22 +43,30 @@
       {
         "title": "MentoriaAI",
         "desc": "Plataforma inteligente de mentoria desenvolvida com React, .NET, PostgreSQL, Elasticsearch e Docker. O sistema utiliza IA para conectar usuários a mentores de forma eficiente através de buscas semânticas.",
-        "active": true
+        "active": true,
+        "liveLink": "https://lucasgomes.dev/mentoria-ai",
+        "githubLink": "https://github.com/lucasGomes01/mentoria-ai"
       },
       {
         "title": "ChartMaker",
         "desc": "Aplicação web para criação e visualização de gráficos dinâmicos. Desenvolvida com foco em análise de dados, permitindo gerar dashboards interativos e personalizáveis de forma simples e rápida.",
-        "active": true
+        "active": true,
+        "liveLink": "https://lucasgomes.dev/chartmaker",
+        "githubLink": "https://github.com/lucasGomes01/chartmaker"
       },
       {
         "title": "LIDAR Visualizer",
         "desc": "Sistema para visualização em tempo real de dados de sensor LIDAR utilizando ESP32 e C#. O projeto converte leituras de distância em coordenadas XY para exibição gráfica e detecção de obstáculos.",
-        "active": false
+        "active": false,
+        "liveLink": "https://lucasgomes.dev/lidar",
+        "githubLink": "https://github.com/lucasGomes01/lidar"
       },
       {
         "title": "Smart Commerce App",
         "desc": "Aplicação mobile desenvolvida em React Native para divulgação de comércios locais. O sistema possui listagem dinâmica, avaliações, horário de funcionamento e integração com APIs para gerenciamento de dados.",
-        "active": false
+        "active": false,
+        "liveLink": "https://lucasgomes.dev/smartcommerce",
+        "githubLink": "https://github.com/lucasGomes01/smartcommerce"
       }
     ]
   },
