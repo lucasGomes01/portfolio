@@ -1,6 +1,54 @@
 @import "tailwindcss";
 
+@theme {
+  --color-accent: #00E5CC;
+  --color-secondary: #7b2cbf;
+  --color-dark-bg: #050b14;
+}
+
 body {
   margin: 0;
-  font-family: Arial, sans-serif;
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+  background-color: var(--color-dark-bg);
+  color: #ffffff;
+  overflow-x: hidden; /* Prevent horizontal scroll on mobile */
+}
+
+/* Custom Scrollbar */
+::-webkit-scrollbar {
+  width: 8px;
+}
+
+::-webkit-scrollbar-track {
+  background: #020408;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-accent);
+}
+
+/* Text Selection */
+::selection {
+  background: rgba(0, 229, 204, 0.4);
+  color: #fff;
+}
+
+/* Reusable Utilities */
+.glass {
+  background: rgba(5, 11, 20, 0.6);
+  backdrop-filter: blur(16px);
+  -webkit-backdrop-filter: blur(16px);
+  border: 1px solid rgba(0, 229, 204, 0.1);
+}
+
+.text-gradient {
+  background: linear-gradient(to right, #10B981, #3B82F6);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }

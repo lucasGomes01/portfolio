@@ -1,0 +1,92 @@
+{
+  "header": {
+    "home": "Home",
+    "about": "About",
+    "projects": "Projects",
+    "skills": "Skills",
+    "contact": "Contact"
+  },
+  "home": {
+    "greeting": "Hi, my name is",
+    "role": "I'm a fullstack Developer who transforms ideas into solutions, from the database to the final click.",
+    "projectsBtn": "See My Projects",
+    "cvBtn": "Download CV",
+    "scroll": "Scroll",
+    "openToWork": "Open to work"
+  },
+  "about": {
+    "title1": "About",
+    "title2": "me",
+    "subtitle": "Who am I",
+    "p1_1": "With 5 years of experience in the tech industry, I focus on building robust and scalable systems. My journey as a ",
+    "p1_strong": "Software Engineer",
+    "p1_2": " allowed me to navigate between the rigor of C# back-ends and the agility of the React ecosystem.",
+    "p2_1": "Specialist in ",
+    "p2_strong": "Clean Architecture",
+    "p2_2": ", I always strive to write clean and maintainable code, ensuring the technical solution aligns with business goals.",
+    "p3": "I am a fullstack developer who turns ideas into end-to-end solutions.",
+    "cvBtn": "Download CV",
+    "card_exp_title": "Experience",
+    "card_exp_desc": "5+ years in tech",
+    "card_spec_title": "Specialty",
+    "card_spec_desc": "Clean Architecture",
+    "card_stack_title": "Main Stack",
+    "card_stack_desc": "C# & React"
+  },
+  "projects": {
+    "title": "My Projects",
+    "subtitle": "Recent works",
+    "viewBtn": "View Project",
+    "list": [
+      {
+        "title": "Project 1",
+        "desc": "Test project description"
+      },
+      {
+        "title": "Project 2",
+        "desc": "Test project description"
+      },
+      {
+        "title": "Project 3",
+        "desc": "Test project description"
+      },
+      {
+        "title": "Project 4",
+        "desc": "Test project description"
+      }
+    ]
+  },
+  "skills": {
+    "title1": "My",
+    "title2": "Skills",
+    "subtitle": "Tools and technologies I use to build modern and performant solutions."
+  },
+  "footer": {
+    "copyright": "All rights reserved.",
+    "tagline": "Full Stack Developer",
+    "made": "Made with"
+  },
+  "contact": {
+    "eyebrow": "Get in touch",
+    "title": "Let's",
+    "titleAccent": "Talk",
+    "subtitle": "Have a project in mind or just want to say hi? My inbox is always open.",
+    "emailLabel": "Email",
+    "phoneLabel": "Phone",
+    "locationLabel": "Location",
+    "available": "Currently",
+    "availableStatus": "available for freelance",
+    "availableEnd": "& full-time opportunities.",
+    "formTitle": "Send a message",
+    "nameLabel": "Name",
+    "namePlaceholder": "Your name",
+    "emailPlaceholder": "your@email.com",
+    "subjectLabel": "Subject",
+    "subjectPlaceholder": "Project inquiry, collaboration...",
+    "messageLabel": "Message",
+    "messagePlaceholder": "Tell me about your project...",
+    "sendBtn": "Send Message",
+    "sending": "Sending…",
+    "sent": "Message sent!"
+  }
+}

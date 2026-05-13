@@ -1,0 +1,98 @@
+{
+  "header": {
+    "home": "Início",
+    "about": "Sobre",
+    "projects": "Projetos",
+    "skills": "Habilidades",
+    "contact": "Contato"
+  },
+  "home": {
+    "greeting": "Olá, sou Lucas",
+    "role1": "Do banco de dados ao clique final.",
+    "role2": "Código limpo, eficiente e feito para ",
+    "roleHighlight": "resolver problemas reais.",
+    "projectsBtn": "Ver meus projetos",
+    "cvBtn": "Download CV",
+    "scroll": "Scroll",
+    "openToWork": "Disponível para projetos"
+  },
+  "about": {
+    "title1": "Sobre",
+    "title2": "mim",
+    "subtitle": "Quem sou eu",
+    "p1_1": "Com 5 anos de experiência no mercado de tecnologia, foco em construir sistemas robustos e escaláveis. Minha jornada como ",
+    "p1_strong": "Engenheiro de Software",
+    "p1_2": " me permitiu transitar entre o rigor do back-end em C# e a agilidade do ecossistema React.",
+    "p2_1": "Especialista em ",
+    "p2_strong": "Clean Architecture",
+    "p2_2": ", busco sempre escrever código limpo e de fácil manutenção, garantindo que a solução técnica esteja alinhada aos objetivos do negócio.",
+    "p3": "Sou um desenvolvedor fullstack que transforma ideias em soluções de ponta a ponta.",
+    "cvBtn": "Download CV",
+    "card_exp_title": "Experiência",
+    "card_exp_desc": "+5 anos no mercado",
+    "card_spec_title": "Especialidade",
+    "card_spec_desc": "Clean Architecture",
+    "card_stack_title": "Stack Principal",
+    "card_stack_desc": "C# & React"
+  },
+  "projects": {
+    "title": "Meus Projetos",
+    "subtitle": "Trabalhos recentes",
+    "viewBtn": "Ver Projeto",
+    "list": [
+      {
+        "title": "MentoriaAI",
+        "desc": "Plataforma inteligente de mentoria desenvolvida com React, .NET, PostgreSQL, Elasticsearch e Docker. O sistema utiliza IA para conectar usuários a mentores de forma eficiente através de buscas semânticas.",
+        "active": true
+      },
+      {
+        "title": "ChartMaker",
+        "desc": "Aplicação web para criação e visualização de gráficos dinâmicos. Desenvolvida com foco em análise de dados, permitindo gerar dashboards interativos e personalizáveis de forma simples e rápida.",
+        "active": true
+      },
+      {
+        "title": "LIDAR Visualizer",
+        "desc": "Sistema para visualização em tempo real de dados de sensor LIDAR utilizando ESP32 e C#. O projeto converte leituras de distância em coordenadas XY para exibição gráfica e detecção de obstáculos.",
+        "active": false
+      },
+      {
+        "title": "Smart Commerce App",
+        "desc": "Aplicação mobile desenvolvida em React Native para divulgação de comércios locais. O sistema possui listagem dinâmica, avaliações, horário de funcionamento e integração com APIs para gerenciamento de dados.",
+        "active": false
+      }
+    ]
+  },
+  "skills": {
+    "title1": "Minhas",
+    "title2": "Skills",
+    "subtitle": "Ferramentas e tecnologias que utilizo para construir soluções modernas e performáticas."
+  },
+  "footer": {
+    "copyright": "Todos os direitos reservados.",
+    "tagline": "Desenvolvedor Full Stack",
+    "made": "Feito com"
+  },
+  "contact": {
+    "eyebrow": "Entre em contato",
+    "title": "Vamos",
+    "titleAccent": "Conversar",
+    "subtitle": "Tem um projeto em mente ou quer apenas dizer olá? Minha caixa de entrada está sempre aberta.",
+    "emailLabel": "Email",
+    "phoneLabel": "Telefone",
+    "locationLabel": "Localização",
+    "available": "Atualmente",
+    "availableStatus": "disponível para freelance",
+    "availableEnd": "e oportunidades full-time.",
+    "formTitle": "Envie uma mensagem",
+    "nameLabel": "Nome",
+    "namePlaceholder": "Seu nome",
+    "emailPlaceholder": "seu@email.com",
+    "subjectLabel": "Assunto",
+    "subjectPlaceholder": "Proposta de projeto, colaboração...",
+    "messageLabel": "Mensagem",
+    "messagePlaceholder": "Me fale sobre seu projeto...",
+    "sendBtn": "Enviar Mensagem",
+    "sending": "Enviando…",
+    "sent": "Mensagem enviada!"
+  }
+}

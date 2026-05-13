@@ -24,36 +24,35 @@ export function FloatingIcons() {
                 particles: {
                     number: {
                         value: 15, // Quantidade de ícones flutuando
-                        density: { enable: true, area: 800 },
+                        density: { enable: true, width: 800, height: 800 },
                     },
                     shape: {
                         type: "image", // Define que a partícula é uma imagem
                         options: {
                             image: [
-                                // .NET (C#)
-                                { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg", width: 100, height: 100 },
-                                { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dot-net/dot-net-original.svg", width: 100, height: 100 },
+                                // Frontend
+                                { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg",                      width: 100, height: 100 },
+                                { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg",             width: 100, height: 100 },
+                                { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg",             width: 100, height: 100 },
+                                { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg",                       width: 100, height: 100 },
+                                { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg",                         width: 100, height: 100 },
+                                { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jquery/jquery-original.svg",                     width: 100, height: 100 },
+                                { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/expo/expo-original.svg",                         width: 100, height: 100 },
 
-                                // Git & AWS
-                                { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg", width: 100, height: 100 },
-                                { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/amazonwebservices/amazonwebservices-original-wordmark.svg", width: 100, height: 100 },
+                                // Backend & Data
+                                { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/csharp/csharp-original.svg",                     width: 100, height: 100 },
+                                { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/dotnetcore/dotnetcore-original.svg",             width: 100, height: 100 },
+                                { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg",             width: 100, height: 100 },
+                                { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/elasticsearch/elasticsearch-original.svg",       width: 100, height: 100 },
+                                { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/rabbitmq/rabbitmq-original.svg",                 width: 100, height: 100 },
+                                { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/microsoftsqlserver/microsoftsqlserver-plain.svg", width: 100, height: 100 },
 
-                                // Frontend Base
-                                { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg", width: 100, height: 100 },
-                                { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg", width: 100, height: 100 },
-                                { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg", width: 100, height: 100 },
-                                { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg", width: 100, height: 100 },
-
-                                // Bibliotecas & Frameworks
-                                { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg", width: 100, height: 100 },
-                                { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/jquery/jquery-original.svg", width: 100, height: 100 },
-                                { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bootstrap/bootstrap-original.svg", width: 100, height: 100 },
-                                { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg", width: 100, height: 100 },
-
-                                // Backend & DB
-                                { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg", width: 100, height: 100 },
-                                { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/microsoftsqlserver/microsoftsqlserver-original.svg", width: 100, height: 100 },
-                                { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg", width: 100, height: 100 },
+                                // Tools
+                                { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg",                          width: 100, height: 100 },
+                                { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/github/github-original.svg",                    width: 100, height: 100 },
+                                { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/docker/docker-original.svg",                    width: 100, height: 100 },
+                                { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/vscode/vscode-original.svg",                    width: 100, height: 100 },
+                                { src: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postman/postman-original.svg",                  width: 100, height: 100 },
                             ],
                         },
                     },
@@ -86,7 +85,7 @@ export function FloatingIcons() {
                 },
                 retina_detect: true,
             }}
-            className="absolute inset-0 z-0"
+            className="absolute inset-0 z-0 pointer-events-none"
         />
     );
 }

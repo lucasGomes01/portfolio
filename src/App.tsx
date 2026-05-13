@@ -5,6 +5,8 @@ import { About } from "./sections/About/About";
 import { Home } from "./sections/home/Home";
 import { Projects } from "./sections/Projects/Projects";
 import { Skills } from "./sections/skills/Skills";
+import { Contact } from "./sections/Contact/Contact";
+import { Footer } from "./components/Footer";
 
 import 'aos/dist/aos.css';
 
@@ -17,12 +19,14 @@ function App() {
   }, []);
 
   return (
-    <div style={{ background: "#0a0a0a", minHeight: "100vh" }}>
+    <div style={{ background: "var(--color-dark-bg)", minHeight: "100vh" }}>
       <Header />
       <Home />
       <About />
       <Projects />
       <Skills />
+      <Contact />
+      <Footer />
     </div>
   );
 }

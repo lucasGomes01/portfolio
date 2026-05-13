@@ -1,73 +1,207 @@
-import React from 'react';
-import { FloatingIcons } from '../../components/FloatingIcons';
+import { FloatingIcons } from "../../components/FloatingIcons";
+import { useTranslation } from "react-i18next";
+import { useRef, useCallback } from "react";
 
-// Array de dados para facilitar a manutenção
-const skills = [
-    { name: 'HTML5', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/html5/html5-original.svg' },
-    { name: 'CSS3', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/css3/css3-original.svg' },
-    { name: 'JavaScript', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg' },
-    { name: 'TypeScript', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg' },
-    { name: 'Node.js', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg' },
-    { name: 'React', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg' },
-    { name: 'Tailwind CSS', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original-wordmark.svg' },
-    { name: 'Next.js', icon: 'https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg' },
+const CDN = "https://cdn.jsdelivr.net/gh/devicons/devicon/icons";
+
+type Skill = { name: string; icon: string | null };
+
+const skillGroups: { label: string; dot: string; aosDelay: number; skills: Skill[] }[] = [
+  {
+    label: "Frontend",
+    dot: "#00E5CC",
+    aosDelay: 100,
+    skills: [
+      { name: "React",        icon: `${CDN}/react/react-original.svg` },
+      { name: "React Native", icon: `${CDN}/react/react-original.svg` },
+      { name: "Expo",         icon: `${CDN}/expo/expo-original.svg` },
+      { name: "JavaScript",   icon: `${CDN}/javascript/javascript-original.svg` },
+      { name: "TypeScript",   icon: `${CDN}/typescript/typescript-original.svg` },
+      { name: "HTML",         icon: `${CDN}/html5/html5-original.svg` },
+      { name: "CSS",          icon: `${CDN}/css3/css3-original.svg` },
+      { name: "jQuery",       icon: `${CDN}/jquery/jquery-original.svg` },
+      { name: "AJAX",         icon: `${CDN}/javascript/javascript-original.svg` },
+      { name: "Kendo UI",     icon: null },
+    ],
+  },
+  {
+    label: "Backend & Data",
+    dot: "#A78BFA",
+    aosDelay: 200,
+    skills: [
+      { name: "C#",            icon: `${CDN}/csharp/csharp-original.svg` },
+      { name: ".NET",          icon: `${CDN}/dotnetcore/dotnetcore-original.svg` },
+      { name: "ASP.NET",       icon: `${CDN}/dot-net/dot-net-original.svg` },
+      { name: "SQL Server",    icon: `${CDN}/microsoftsqlserver/microsoftsqlserver-plain.svg` },
+      { name: "PostgreSQL",    icon: `${CDN}/postgresql/postgresql-original.svg` },
+      { name: "Elasticsearch", icon: `${CDN}/elasticsearch/elasticsearch-original.svg` },
+      { name: "RabbitMQ",      icon: `${CDN}/rabbitmq/rabbitmq-original.svg` },
+      { name: "Docker",        icon: `${CDN}/docker/docker-original.svg` },
+      { name: "Microservices", icon: null },
+      { name: "RAG",           icon: null },
+    ],
+  },
+  {
+    label: "Tools & Environment",
+    dot: "#60A5FA",
+    aosDelay: 300,
+    skills: [
+      { name: "Git",             icon: `${CDN}/git/git-original.svg` },
+      { name: "GitHub",          icon: `${CDN}/github/github-original.svg` },
+      { name: "Visual Studio",   icon: `${CDN}/visualstudio/visualstudio-plain.svg` },
+      { name: "VS Code",         icon: `${CDN}/vscode/vscode-original.svg` },
+      { name: "Postman",         icon: `${CDN}/postman/postman-original.svg` },
+      { name: "Chrome DevTools", icon: `${CDN}/chrome/chrome-original.svg` },
+    ],
+  },
 ];
 
+const GROUP_FACTORS = [0.016, 0.010, 0.013];
+
 export function Skills() {
-    return (
-        <section className="relative bg-[#0a0a0a] py-20 px-4">
-            <FloatingIcons />
-            <div className="relative z-10 max-w-6xl mx-auto text-center">
+  const { t } = useTranslation();
+  const sectionRef = useRef<HTMLElement>(null);
+  const groupRefs = useRef<(HTMLDivElement | null)[]>([]);
 
-                {/* Título com animação de fade para baixo */}
-                <div
-                    className="flex items-center justify-center gap-4 mb-2"
-                    data-aos="fade-down"
-                >
-                    <div className="h-[1px] w-8 bg-cyan-500/50"></div>
-                    <h2 className="text-4xl font-bold text-white tracking-tight">Skills</h2>
-                    <div className="h-[1px] w-8 bg-cyan-500/50"></div>
+  const handleMouseMove = useCallback((e: React.MouseEvent<HTMLElement>) => {
+    const section = sectionRef.current;
+    if (!section) return;
+    const rect = section.getBoundingClientRect();
+    const cx = e.clientX - rect.left - rect.width / 2;
+    const cy = e.clientY - rect.top - rect.height / 2;
+    groupRefs.current.forEach((el, i) => {
+      if (!el) return;
+      const f = GROUP_FACTORS[i] ?? 0.012;
+      el.style.transform = `translate(${cx * f}px, ${cy * f}px)`;
+      el.style.transition = "transform 0.08s ease-out";
+    });
+  }, []);
+
+  const handleMouseLeave = useCallback(() => {
+    groupRefs.current.forEach((el) => {
+      if (!el) return;
+      el.style.transform = "translate(0,0)";
+      el.style.transition = "transform 0.6s ease-out";
+    });
+  }, []);
+
+  return (
+    <section
+      id="skills"
+      ref={sectionRef}
+      className="relative bg-transparent py-28 px-6 overflow-hidden"
+      onMouseMove={handleMouseMove}
+      onMouseLeave={handleMouseLeave}
+    >
+      <FloatingIcons />
+
+      {/* Subtle central glow */}
+      <div
+        className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] rounded-full pointer-events-none -z-0"
+        style={{ background: "radial-gradient(ellipse, rgba(0,229,204,0.05) 0%, transparent 70%)" }}
+      />
+
+      <div className="relative z-10 max-w-5xl mx-auto">
+
+        {/* Header */}
+        <div className="text-center mb-16" data-aos="fade-down">
+          <h2 className="text-white text-4xl md:text-5xl font-bold tracking-tight">
+            {t("skills.title1")} <span className="text-accent">{t("skills.title2")}</span>
+          </h2>
+          <div className="flex items-center justify-center gap-3 mt-4">
+            <div className="h-px w-12 bg-gradient-to-r from-transparent to-accent" />
+            <p className="text-accent text-[11px] font-bold uppercase tracking-[0.25em]">{t("skills.subtitle")}</p>
+            <div className="h-px w-12 bg-gradient-to-l from-transparent to-accent" />
+          </div>
+        </div>
+
+        {/* Skill groups */}
+        <div className="flex flex-col gap-6">
+          {skillGroups.map((group, gi) => (
+            <div
+              key={group.label}
+              ref={(el) => { groupRefs.current[gi] = el; }}
+              className="will-change-transform"
+              data-aos="fade-up"
+              data-aos-delay={group.aosDelay}
+            >
+              <div
+                className="rounded-2xl p-6"
+                style={{
+                  background: "rgba(255,255,255,0.02)",
+                  border: "1px solid rgba(255,255,255,0.06)",
+                  backdropFilter: "blur(8px)",
+                }}
+              >
+                {/* Category header */}
+                <div className="flex items-center gap-2.5 mb-5">
+                  <div
+                    className="w-2 h-2 rounded-full"
+                    style={{ background: group.dot, boxShadow: `0 0 8px ${group.dot}` }}
+                  />
+                  <span
+                    className="text-[11px] font-bold uppercase tracking-[0.25em]"
+                    style={{ color: group.dot }}
+                  >
+                    {group.label}
+                  </span>
+                  <div
+                    className="flex-1 h-px ml-1"
+                    style={{ background: `linear-gradient(to right, ${group.dot}40, transparent)` }}
+                  />
                 </div>
 
-                <p
-                    className="text-cyan-400 font-medium mb-12"
-                    data-aos="fade-up"
-                    data-aos-delay="200"
-                >
-                    Tecnologias que eu domino
-                </p>
-
-                {/* Grid de Cards */}
-                <div className="grid grid-cols-2 md:grid-cols-4 gap-6">
-                    {skills.map((skill, index) => (
-                        <div
-                            key={skill.name}
-                            // Animação de zoom ou fade, com delay incremental baseado no índice
-                            data-aos="zoom-in-up"
-                            data-aos-delay={index * 100}
-                            className="group relative bg-[#111] border border-white/5 rounded-2xl p-8 flex flex-col items-center justify-center gap-4 transition-all duration-300 hover:border-cyan-500/30 hover:-translate-y-1 overflow-hidden"
+                {/* Skill pills */}
+                <div className="flex flex-wrap gap-3">
+                  {group.skills.map((skill, si) => (
+                    <div
+                      key={skill.name}
+                      className="group flex items-center gap-2.5 px-4 py-2.5 rounded-xl cursor-default transition-all duration-300 hover:-translate-y-[2px]"
+                      style={{
+                        background: "rgba(255,255,255,0.03)",
+                        border: "1px solid rgba(255,255,255,0.07)",
+                      }}
+                      onMouseEnter={e => {
+                        const el = e.currentTarget as HTMLElement;
+                        el.style.borderColor = `${group.dot}55`;
+                        el.style.background = `${group.dot}0f`;
+                        el.style.boxShadow = `0 4px 20px ${group.dot}18`;
+                      }}
+                      onMouseLeave={e => {
+                        const el = e.currentTarget as HTMLElement;
+                        el.style.borderColor = "rgba(255,255,255,0.07)";
+                        el.style.background = "rgba(255,255,255,0.03)";
+                        el.style.boxShadow = "none";
+                      }}
+                      data-aos="zoom-in"
+                      data-aos-delay={group.aosDelay + si * 35}
+                    >
+                      {/* Icon or initials fallback */}
+                      {skill.icon ? (
+                        <img
+                          src={skill.icon}
+                          alt={skill.name}
+                          className="w-5 h-5 object-contain group-hover:scale-110 transition-transform duration-300 flex-shrink-0"
+                        />
+                      ) : (
+                        <span
+                          className="w-5 h-5 flex items-center justify-center text-[8px] font-bold rounded flex-shrink-0"
+                          style={{ color: group.dot, background: `${group.dot}22` }}
                         >
-                            {/* Efeito de brilho no fundo ao passar o mouse */}
-                            <div className="absolute inset-0 bg-gradient-to-t from-cyan-500/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity" />
-
-                            {/* Ícone */}
-                            <img
-                                src={skill.icon}
-                                alt={skill.name}
-                                className="w-16 h-16 object-contain filter grayscale group-hover:grayscale-0 transition-all"
-                            />
-
-                            {/* Nome da Skill */}
-                            <span className="text-gray-400 font-semibold group-hover:text-white transition-colors">
-                                {skill.name}
-                            </span>
-
-                            {/* Bordinha inferior luminosa estilizada */}
-                            <div className="absolute bottom-0 left-0 w-full h-[2px] bg-cyan-500/0 group-hover:bg-cyan-500 shadow-[0_0_15px_rgba(6,182,212,0.5)] transition-all" />
-                        </div>
-                    ))}
+                          {skill.name.slice(0, 2).toUpperCase()}
+                        </span>
+                      )}
+                      <span className="text-blue-100/75 group-hover:text-white text-sm font-medium transition-colors duration-300 whitespace-nowrap">
+                        {skill.name}
+                      </span>
+                    </div>
+                  ))}
                 </div>
+              </div>
             </div>
-        </section>
-    );
+          ))}
+        </div>
+      </div>
+    </section>
+  );
 }
