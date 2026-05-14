@@ -1,6 +1,6 @@
 import { Monitor, Code2, BarChart3, Layout, Lock, ExternalLink, X, Globe, ArrowRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useRef } from "react";
 
 const GithubIcon = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -51,6 +51,42 @@ export function Projects() {
   const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
+  const sectionRef = useRef<HTMLElement>(null);
+  const laptopScrollRef = useRef<HTMLDivElement>(null);
+  const phoneScrollRef = useRef<HTMLDivElement>(null);
+
+  // Scroll Hijacking Logic
+  useEffect(() => {
+    const handleScroll = () => {
+      if (!sectionRef.current) return;
+      
+      const rect = sectionRef.current.getBoundingClientRect();
+      const viewportHeight = window.innerHeight;
+      
+      const scrollableDistance = rect.height - viewportHeight;
+      if (scrollableDistance <= 0) return;
+      
+      const scrollProgress = -rect.top / scrollableDistance;
+      const clampedProgress = Math.max(0, Math.min(1, scrollProgress));
+      
+      if (laptopScrollRef.current) {
+        const maxScroll = laptopScrollRef.current.scrollHeight - laptopScrollRef.current.clientHeight;
+        laptopScrollRef.current.scrollTop = maxScroll * clampedProgress;
+      }
+      
+      if (phoneScrollRef.current) {
+        const maxScroll = phoneScrollRef.current.scrollHeight - phoneScrollRef.current.clientHeight;
+        phoneScrollRef.current.scrollTop = maxScroll * clampedProgress;
+      }
+    };
+
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    // Run once on mount to set initial position
+    handleScroll();
+    
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
+
   // Prevent background scrolling when modal is open
   useEffect(() => {
     if (selectedProject) {
@@ -63,12 +99,12 @@ export function Projects() {
   }, [selectedProject]);
 
   return (
-    <section id="projects" className="bg-transparent min-h-screen py-24 px-4 md:px-8 flex flex-col items-center justify-center relative z-10 overflow-hidden">
-
-      {/* SECTION TITLE */}
-      <div className="text-center mb-14" data-aos="fade-down">
+    <section id="projects" ref={sectionRef} className="relative bg-transparent h-[250vh] z-10">
+      <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden py-10 md:py-16">
+        {/* SECTION TITLE */}
+        <div className="text-center mb-6 md:mb-10" data-aos="fade-down">
         <h2 className="text-white text-4xl md:text-5xl font-bold tracking-tight">
-          {t("projects.title")}
+          {t("projects.title1")} <span className="text-accent">{t("projects.title2")}</span>
         </h2>
         <div className="flex items-center justify-center gap-3 mt-4">
           <div className="h-px w-12 bg-gradient-to-r from-transparent to-[#10B981]" />
@@ -143,7 +179,7 @@ export function Projects() {
             </div>
 
             {/* Project list (single col on phone) */}
-            <div className="relative z-10 px-3 pb-6 space-y-3 overflow-y-auto" style={{ maxHeight: "520px" }}>
+            <div ref={phoneScrollRef} className="relative z-10 px-3 pb-6 space-y-3 overflow-hidden" style={{ maxHeight: "520px" }}>
               {projects.map((project, index) => (
                 <div
                   key={project.id}
@@ -153,8 +189,6 @@ export function Projects() {
                     background: "rgba(16,185,129,0.05)",
                     border: "1px solid rgba(16,185,129,0.2)",
                   }}
-                  data-aos="fade-up"
-                  data-aos-delay={150 + index * 80}
                 >
                   <div className="w-11 h-11 shrink-0 rounded-xl flex items-center justify-center"
                     style={{ background: "rgba(0,0,0,0.5)", border: "1px solid rgba(16,185,129,0.3)" }}>
@@ -254,7 +288,7 @@ export function Projects() {
             </div>
 
             {/* Browser Content */}
-            <div className="relative overflow-y-auto [&::-webkit-scrollbar]:hidden" style={{ background: "#020c06", height: "480px" }}>
+            <div ref={laptopScrollRef} className="relative overflow-hidden [&::-webkit-scrollbar]:hidden" style={{ background: "#020c06", height: "480px" }}>
               {/* Grid bg */}
               <div className="absolute inset-0 pointer-events-none"
                 style={{
@@ -276,8 +310,6 @@ export function Projects() {
                       onClick={() => setSelectedProject(project)}
                       className="group relative flex flex-col rounded-xl cursor-pointer transition-all duration-300 hover:-translate-y-[2px] overflow-hidden"
                       style={{ background: "#060f0a", border: "1px solid rgba(16,185,129,0.15)" }}
-                      data-aos="fade-up"
-                      data-aos-delay={200 + index * 100}
                       onMouseEnter={e => {
                         (e.currentTarget as HTMLElement).style.borderColor = "rgba(16,185,129,0.5)";
                         (e.currentTarget as HTMLElement).style.boxShadow = "0 8px 30px rgba(16,185,129,0.12)";
@@ -289,8 +321,8 @@ export function Projects() {
                     >
                       {/* Project Image */}
                       <div className="w-full h-44 overflow-hidden relative">
-                         <img src={project.image} alt={project.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
-                         <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
+                        <img src={project.image} alt={project.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                        <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
                       </div>
 
                       {/* Text Content */}
@@ -301,7 +333,7 @@ export function Projects() {
                         <p className="text-[#8c9f96] text-[13px] leading-relaxed mb-6 flex-1">
                           {project.desc}
                         </p>
-                        
+
                         {/* Button */}
                         <div className="mt-auto">
                           <button
@@ -316,8 +348,8 @@ export function Projects() {
                               (e.currentTarget as HTMLElement).style.borderColor = "rgba(16,185,129,0.4)";
                             }}
                             onClick={(e) => {
-                               e.stopPropagation();
-                               setSelectedProject(project);
+                              e.stopPropagation();
+                              setSelectedProject(project);
                             }}
                           >
                             {t("projects.viewBtn")} <ArrowRight size={14} />
@@ -387,60 +419,62 @@ export function Projects() {
         />
       </div>
 
+      </div>
+
       {/* ═══════════════════════════════
           PROJECT MODAL
       ═══════════════════════════════ */}
       {selectedProject && (
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
           {/* Backdrop */}
-          <div 
+          <div
             className="absolute inset-0 bg-[#020c06]/80 backdrop-blur-sm transition-opacity"
             onClick={() => setSelectedProject(null)}
           />
-          
+
           {/* Modal Content */}
-          <div 
+          <div
             className="relative w-full max-w-5xl bg-gradient-to-b from-[#071712] to-[#030e08] rounded-2xl border border-[#10B981]/30 shadow-[0_20px_60px_rgba(16,185,129,0.15)] overflow-hidden flex flex-col transform transition-all animate-fade-in"
-            style={{ maxHeight: '90vh' }}
+            style={{ maxHeight: '76vh' }}
           >
             {/* Header Area */}
             <div className="p-6 md:p-8 flex items-start justify-between border-b border-[#10B981]/10 relative overflow-hidden shrink-0">
-               {/* Decorative glow inside modal header */}
-               <div className="absolute top-0 right-0 w-64 h-64 bg-[#10B981]/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/3 pointer-events-none" />
-               
-               <div className="flex items-center gap-4 relative z-10">
-                 <div className="w-16 h-16 shrink-0 rounded-2xl flex items-center justify-center bg-[#020c06] border border-[#10B981]/30 shadow-[0_0_15px_rgba(16,185,129,0.2)]">
-                   {React.cloneElement(selectedProject.icon as React.ReactElement<any>, { size: 36 })}
-                 </div>
-                 <div>
-                   <h3 className="text-2xl font-bold text-white mb-1">{selectedProject.title}</h3>
-                   {selectedProject.active && (
-                     <div className="flex items-center gap-2">
-                       <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
-                       <span className="text-[#10B981]/80 text-xs font-mono uppercase tracking-widest">{t("projects.activeStatus", "Active Project")}</span>
-                     </div>
-                   )}
-                 </div>
-               </div>
+              {/* Decorative glow inside modal header */}
+              <div className="absolute top-0 right-0 w-64 h-64 bg-[#10B981]/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/3 pointer-events-none" />
 
-               <button 
-                 onClick={() => setSelectedProject(null)}
-                 className="relative z-10 text-white/50 hover:text-white bg-white/5 hover:bg-white/10 w-10 h-10 rounded-full flex items-center justify-center transition-colors"
-               >
-                 <X size={20} />
-               </button>
+              <div className="flex items-center gap-4 relative z-10">
+                <div className="w-16 h-16 shrink-0 rounded-2xl flex items-center justify-center bg-[#020c06] border border-[#10B981]/30 shadow-[0_0_15px_rgba(16,185,129,0.2)]">
+                  {React.cloneElement(selectedProject.icon as React.ReactElement<any>, { size: 36 })}
+                </div>
+                <div>
+                  <h3 className="text-2xl font-bold text-white mb-1">{selectedProject.title}</h3>
+                  {selectedProject.active && (
+                    <div className="flex items-center gap-2">
+                      <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
+                      <span className="text-[#10B981]/80 text-xs font-mono uppercase tracking-widest">{t("projects.activeStatus", "Active Project")}</span>
+                    </div>
+                  )}
+                </div>
+              </div>
+
+              <button
+                onClick={() => setSelectedProject(null)}
+                className="relative z-50 text-white/50 hover:text-white bg-white/5 hover:bg-white/10 w-10 h-10 shrink-0 rounded-full flex items-center justify-center transition-colors"
+              >
+                <X size={20} />
+              </button>
             </div>
 
             {/* Body Area */}
             <div className="p-6 md:p-8 overflow-y-auto flex flex-col lg:flex-row gap-8">
-              
+
               {/* Left Side: Carousel */}
               <div className="flex-1 flex flex-col gap-4">
                 {/* Main Active Image */}
                 <div className="w-full aspect-video rounded-xl overflow-hidden border border-[#10B981]/20 shadow-[0_0_20px_rgba(16,185,129,0.1)]">
                   <img src={selectedProject.gallery[currentImageIndex]} alt={selectedProject.title} className="w-full h-full object-cover transition-opacity duration-300" />
                 </div>
-                
+
                 {/* Thumbnails */}
                 <div className="flex gap-3 overflow-x-auto pb-2 [&::-webkit-scrollbar]:hidden">
                   {selectedProject.gallery.map((img, i) => (
@@ -457,15 +491,15 @@ export function Projects() {
 
               {/* Right Side: Info & Actions */}
               <div className="w-full lg:w-[400px] flex flex-col">
-                <h4 className="text-white/90 text-lg font-semibold mb-3">About this project</h4>
+                <h4 className="text-white/90 text-lg font-semibold mb-3">{t("projects.aboutProject")}</h4>
                 <p className="text-white/60 text-sm leading-relaxed mb-8">
                   {selectedProject.desc}
                 </p>
 
-                <h4 className="text-white/90 text-lg font-semibold mb-3">Technologies</h4>
+                <h4 className="text-white/90 text-lg font-semibold mb-3">{t("projects.technologies")}</h4>
                 <div className="flex flex-wrap gap-2 mb-8">
                   {selectedProject.tags.map(tag => (
-                    <span 
+                    <span
                       key={tag}
                       className="px-3 py-1.5 rounded-md text-xs font-medium text-[#10B981]"
                       style={{ background: "rgba(16,185,129,0.08)", border: "1px solid rgba(16,185,129,0.2)" }}
@@ -477,23 +511,23 @@ export function Projects() {
 
                 {/* Action Buttons */}
                 <div className="flex flex-col gap-3 mt-auto pt-4">
-                  <a 
+                  <a
                     href={selectedProject.liveLink}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-full inline-flex items-center justify-center gap-2 bg-[#10B981] hover:bg-[#0ea5e9] text-[#020c06] text-sm font-bold px-6 py-3.5 rounded-xl transition-colors duration-300 shadow-[0_0_20px_rgba(16,185,129,0.3)]"
                   >
                     <Globe size={18} />
-                    Live Preview
+                    {t("projects.livePreview")}
                   </a>
-                  <a 
+                  <a
                     href={selectedProject.githubLink}
                     target="_blank"
                     rel="noopener noreferrer"
                     className="w-full inline-flex items-center justify-center gap-2 bg-transparent hover:bg-white/5 text-white text-sm font-semibold px-6 py-3.5 rounded-xl border border-white/20 hover:border-white/40 transition-colors duration-300"
                   >
                     <GithubIcon />
-                    Source Code
+                    {t("projects.sourceCode")}
                   </a>
                 </div>
               </div>

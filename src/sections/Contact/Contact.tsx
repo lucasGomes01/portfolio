@@ -112,19 +112,14 @@ export function Contact() {
     {
       icon: <Mail size={20} className="text-accent" />,
       label: t("contact.emailLabel") || "Email",
-      value: "lucas@email.com",
-      href: "mailto:lucas@email.com",
-    },
-    {
-      icon: <Phone size={20} className="text-accent" />,
-      label: t("contact.phoneLabel") || "Phone",
-      value: "+55 (11) 9 0000-0000",
-      href: "tel:+5511900000000",
+      user: "lucas.josedelimagomes",
+      domain: "email.com",
+      isEmail: true,
     },
     {
       icon: <MapPin size={20} className="text-accent" />,
       label: t("contact.locationLabel") || "Location",
-      value: "São Paulo, Brasil",
+      value: "Estado de São Paulo, Brasil",
       href: null,
     },
   ];
@@ -163,7 +158,7 @@ export function Contact() {
           <div className="lg:col-span-2 flex flex-col gap-6" data-aos="fade-right" data-aos-delay="100">
 
             {/* Info cards */}
-            {infos.map(({ icon, label, value, href }) => (
+            {infos.map(({ icon, label, value, href, isEmail, user, domain }) => (
               <div
                 key={label}
                 className="flex items-center gap-4 p-5 rounded-2xl border border-white/6 group hover:border-accent/30 transition-all duration-300 hover:-translate-y-0.5"
@@ -174,7 +169,14 @@ export function Contact() {
                 </div>
                 <div>
                   <p className="text-blue-100/45 text-[10px] font-bold uppercase tracking-widest mb-0.5">{label}</p>
-                  {href ? (
+                  {isEmail ? (
+                    <button 
+                      onClick={() => window.location.href = `mailto:${user}@${domain}`}
+                      className="text-white text-sm font-semibold hover:text-accent transition-colors bg-transparent border-none cursor-pointer p-0 text-left font-sans"
+                    >
+                      {user}<span>@</span>{domain}
+                    </button>
+                  ) : href ? (
                     <a href={href} className="text-white text-sm font-semibold hover:text-accent transition-colors">
                       {value}
                     </a>

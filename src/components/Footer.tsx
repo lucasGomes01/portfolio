@@ -2,9 +2,9 @@ import { Code2, Globe, Mail, Heart } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
 const socials = [
-  { icon: <Code2 size={18} />, label: "GitHub",   href: "#" },
-  { icon: <Globe size={18} />, label: "LinkedIn", href: "#" },
-  { icon: <Mail size={18} />,  label: "Email",    href: "#" },
+  { icon: <Code2 size={18} />, label: "GitHub",   href: "https://github.com/lucasGomes01" },
+  { icon: <Globe size={18} />, label: "LinkedIn", href: "https://www.linkedin.com/in/lucasjosedelimagomes" },
+  { icon: <Mail size={18} />,  label: "Email",    href: "#contact" },
 ];
 
 export function Footer() {
@@ -30,14 +30,19 @@ export function Footer() {
 
         {/* Nav links */}
         <nav className="flex flex-wrap justify-center gap-6">
-          {["home.scroll", "header.about", "header.projects", "header.skills"].map((key) => (
-            <a
+          {[
+            { id: 'home', key: 'header.home' },
+            { id: 'about', key: 'header.about' },
+            { id: 'projects', key: 'header.projects' },
+            { id: 'skills', key: 'header.skills' }
+          ].map(({ id, key }) => (
+            <button
               key={key}
-              href="#"
-              className="text-xs font-semibold uppercase tracking-widest text-blue-100/50 hover:text-accent transition-colors duration-200"
+              onClick={() => document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })}
+              className="text-xs font-semibold uppercase tracking-widest text-blue-100/50 hover:text-accent transition-colors duration-200 bg-transparent border-none cursor-pointer"
             >
               {t(key)}
-            </a>
+            </button>
           ))}
         </nav>
 
@@ -47,8 +52,11 @@ export function Footer() {
             <a
               key={label}
               href={href}
+              target={href.startsWith('http') ? '_blank' : undefined}
+              rel={href.startsWith('http') ? 'noopener noreferrer' : undefined}
+              onClick={href === '#contact' ? (e) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); } : undefined}
               aria-label={label}
-              className="w-10 h-10 rounded-full flex items-center justify-center border border-white/8 text-blue-100/60 hover:border-accent/50 hover:text-accent hover:bg-accent/8 transition-all duration-300"
+              className="w-10 h-10 rounded-full flex items-center justify-center border border-white/8 text-blue-100/60 hover:border-accent/50 hover:text-accent hover:bg-accent/8 transition-all duration-300 cursor-pointer"
             >
               {icon}
             </a>

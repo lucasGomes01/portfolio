@@ -30,8 +30,8 @@ export function Header() {
 
   return (
     <header
-      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled ? 'py-4 glass shadow-[0_4px_30px_rgba(0,0,0,0.5)] border-b border-white/5' : 'py-6 bg-transparent'
+      className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 border-b ${
+        isScrolled ? 'py-4 bg-[#050b14]/80 backdrop-blur-md shadow-[0_4px_30px_rgba(0,0,0,0.5)] border-accent/10' : 'py-6 bg-transparent border-transparent'
       }`}
     >
       <div className="max-w-7xl mx-auto px-6 md:px-20 flex items-center justify-between">

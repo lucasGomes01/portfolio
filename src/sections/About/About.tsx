@@ -4,6 +4,7 @@ import { Code2, Briefcase, Layers, Download } from "lucide-react";
 
 export function About() {
   const { t } = useTranslation();
+  const yearsOfExperience = new Date().getFullYear() - 2022;
 
   return (
     <section id="about" className="relative min-h-screen flex items-center py-28 text-white overflow-hidden bg-transparent">
@@ -81,11 +82,11 @@ export function About() {
           data-aos-duration="900"
           data-aos-delay="200"
         >
-          <div className="text-center md:text-left mb-6">
-            <h2 className="text-white text-4xl md:text-5xl font-bold tracking-tight">
+          <div className="flex flex-col items-center mb-6">
+            <h2 className="text-white text-4xl md:text-5xl font-bold tracking-tight text-center">
               {t("about.title1")} <span className="text-accent">{t("about.title2")}</span>
             </h2>
-            <div className="flex items-center justify-center md:justify-start gap-3 mt-4">
+            <div className="flex items-center justify-center gap-3 mt-4">
               <div className="h-px w-12 bg-gradient-to-r from-transparent to-accent" />
               <p className="text-accent text-[11px] font-bold uppercase tracking-[0.25em]">{t("about.subtitle")}</p>
               <div className="h-px w-12 bg-gradient-to-l from-transparent to-accent" />
@@ -94,7 +95,7 @@ export function About() {
 
           <div className="text-blue-100/65 text-base md:text-lg leading-relaxed mb-8 space-y-4 text-center md:text-left">
             <p>
-              {t("about.p1_1")}<strong className="text-white font-semibold">{t("about.p1_strong")}</strong>{t("about.p1_2")}
+              {t("about.p1_1", { years: yearsOfExperience })}<strong className="text-white font-semibold">{t("about.p1_strong")}</strong>{t("about.p1_2")}
             </p>
             <p>
               {t("about.p2_1")}<strong className="text-white font-semibold">{t("about.p2_strong")}</strong>{t("about.p2_2")}
@@ -105,7 +106,7 @@ export function About() {
           {/* Highlight Cards */}
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 w-full mb-10">
             {[
-              { icon: <Briefcase size={20} className="text-accent" />, title: t("about.card_exp_title"), desc: t("about.card_exp_desc"), color: "accent" },
+              { icon: <Briefcase size={20} className="text-accent" />, title: t("about.card_exp_title"), desc: t("about.card_exp_desc", { years: yearsOfExperience }), color: "accent" },
               { icon: <Layers size={20} className="text-secondary" />, title: t("about.card_spec_title"), desc: t("about.card_spec_desc"), color: "secondary" },
               { icon: <Code2 size={20} className="text-blue-400" />, title: t("about.card_stack_title"), desc: t("about.card_stack_desc"), color: "blue-400" },
             ].map((card, i) => (

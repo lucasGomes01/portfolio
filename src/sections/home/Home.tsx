@@ -1,4 +1,4 @@
-import avatar4 from "../../assets/avatar 4.png";
+import avatar from "../../assets/avatar.png";
 import { ArrowRight, Download, ChevronDown, Mail } from "lucide-react";
 import { useTranslation } from "react-i18next";
 
@@ -82,14 +82,14 @@ export function Home() {
               data-aos="fade-up"
               data-aos-delay="100"
             >
-              <span className="block text-white">Desenvolvedor</span>
-              <span className="block"><span className="text-accent">fullstack</span> <span className="text-white">que transforma</span></span>
-              <span className="block"><span className="text-white">ideias em</span> <span className="text-[#3b82f6]">soluções.</span></span>
+              <span className="block text-white">{t("home.hero1")}</span>
+              <span className="block"><span className="text-accent">{t("home.hero2Accent")}</span> <span className="text-white">{t("home.hero2")}</span></span>
+              <span className="block"><span className="text-white">{t("home.hero3")}</span> <span className="text-[#3b82f6]">{t("home.hero3Accent")}</span></span>
             </h1>
 
             {/* Role */}
             <p
-              className="text-blue-100/50 text-lg leading-relaxed mb-8 max-w-[480px]"
+              className="text-blue-100/50 text-lg leading-relaxed mb-8 max-w-[570px]"
               data-aos="fade-up"
               data-aos-delay="250"
             >
@@ -147,18 +147,18 @@ export function Home() {
               data-aos-delay="500"
             >
               <p className="text-blue-100/40 text-[10px] font-black uppercase tracking-[0.2em]">
-                Conecte-se
+                {t("home.connect")}
               </p>
               <div className="flex gap-4">
-                <a href="#" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white hover:border-accent hover:text-accent transition-all duration-300 hover:-translate-y-1 bg-white/5">
+                <a href="https://github.com/lucasGomes01" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white hover:border-accent hover:text-accent transition-all duration-300 hover:-translate-y-1 bg-white/5">
                   <GithubIcon />
                 </a>
-                <a href="#" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white hover:border-accent hover:text-accent transition-all duration-300 hover:-translate-y-1 bg-white/5">
+                <a href="https://www.linkedin.com/in/lucasjosedelimagomes" target="_blank" rel="noopener noreferrer" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white hover:border-accent hover:text-accent transition-all duration-300 hover:-translate-y-1 bg-white/5">
                   <LinkedinIcon />
                 </a>
-                <a href="#" className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white hover:border-accent hover:text-accent transition-all duration-300 hover:-translate-y-1 bg-white/5">
+                <button onClick={() => document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })} className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white hover:border-accent hover:text-accent transition-all duration-300 hover:-translate-y-1 bg-white/5 cursor-pointer">
                   <Mail size={18} />
-                </a>
+                </button>
               </div>
             </div>
           </div>
@@ -178,7 +178,7 @@ export function Home() {
 
             {/* Main developer illustration (icons already embedded in image) */}
             <img
-              src={avatar4}
+              src={avatar}
               alt="Developer Illustration"
               className="relative z-10 w-full max-w-[480px] object-contain hover:scale-[1.02] transition-transform duration-700"
               style={{ filter: "drop-shadow(0 0 60px rgba(0,229,204,0.12))" }}
@@ -190,13 +190,15 @@ export function Home() {
       {/* ── Bottom scroll cue ── */}
       <div 
         onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-        className="absolute bottom-7 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 opacity-60 hover:opacity-100 transition-opacity duration-300 cursor-pointer select-none animate-float z-20"
+        className="hidden lg:flex absolute bottom-8 left-1/2 -translate-x-1/2 flex-col items-center gap-1.5 opacity-60 hover:opacity-100 transition-opacity duration-300 cursor-pointer select-none z-40"
       >
-        <span className="text-[9px] font-black uppercase tracking-[0.3em] text-blue-100/60 mb-0.5">{t("home.scroll")}</span>
-        <div className="w-[22px] h-[36px] border-[1.5px] border-accent/40 rounded-full flex justify-center pt-1.5 shadow-[0_0_15px_rgba(0,229,204,0.1)] bg-black/20 backdrop-blur-sm">
-          <div className="w-[3px] h-[6px] bg-accent rounded-full animate-scroll-wheel shadow-[0_0_8px_rgba(0,229,204,0.8)]" />
+        <div className="flex flex-col items-center gap-1.5 animate-float">
+          <span className="text-[9px] font-black uppercase tracking-[0.3em] text-blue-100/60 mb-0.5">{t("home.scroll")}</span>
+          <div className="w-[22px] h-[36px] border-[1.5px] border-accent/40 rounded-full flex justify-center pt-1.5 shadow-[0_0_15px_rgba(0,229,204,0.1)] bg-black/20 backdrop-blur-sm">
+            <div className="w-[3px] h-[6px] bg-accent rounded-full animate-scroll-wheel shadow-[0_0_8px_rgba(0,229,204,0.8)]" />
+          </div>
+          <ChevronDown size={14} className="text-accent/60 -mt-1 animate-pulse" />
         </div>
-        <ChevronDown size={14} className="text-accent/60 -mt-1 animate-pulse" />
       </div>
     </section>
   );
