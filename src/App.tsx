@@ -7,6 +7,7 @@ import { Projects } from "./sections/Projects/Projects";
 import { Skills } from "./sections/skills/Skills";
 import { Contact } from "./sections/Contact/Contact";
 import { Footer } from "./components/Footer";
+import { CookieBanner } from "./components/CookieBanner";
 
 import 'aos/dist/aos.css';
 
@@ -27,6 +28,7 @@ function App() {
       <Skills />
       <Contact />
       <Footer />
+      <CookieBanner />
     </div>
   );
 }

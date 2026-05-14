@@ -24,10 +24,10 @@ export function Projects() {
   const projectsList = t("projects.list", { returnObjects: true }) as Array<{ title: string; desc: string; active?: boolean; liveLink?: string; githubLink?: string }>;
 
   const projectImages = [
-    "/projects/mentoria_ai.png",
-    "/projects/chart_maker.png",
-    "/projects/lidar_visualizer.png",
-    "/projects/smart_commerce.png"
+    `${import.meta.env.BASE_URL}projects/mentoria_ai.png`,
+    `${import.meta.env.BASE_URL}projects/chart_maker.png`,
+    `${import.meta.env.BASE_URL}projects/lidar_visualizer.png`,
+    `${import.meta.env.BASE_URL}projects/smart_commerce.png`
   ];
 
   const projects = projectsList.map((proj, index) => ({

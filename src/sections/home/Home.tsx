@@ -188,12 +188,15 @@ export function Home() {
       </div>
 
       {/* ── Bottom scroll cue ── */}
-      <div className="absolute bottom-7 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1 opacity-40 hover:opacity-80 transition-opacity duration-300 cursor-pointer select-none">
-        <span className="text-[9px] font-black uppercase tracking-[0.3em] text-blue-100/60">{t("home.scroll")}</span>
-        <div className="w-5 h-8 border border-accent/35 rounded-full flex justify-center pt-1.5">
-          <div className="w-[3px] h-[6px] bg-accent rounded-full animate-bounce" />
+      <div 
+        onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
+        className="absolute bottom-7 left-1/2 -translate-x-1/2 flex flex-col items-center gap-1.5 opacity-60 hover:opacity-100 transition-opacity duration-300 cursor-pointer select-none animate-float z-20"
+      >
+        <span className="text-[9px] font-black uppercase tracking-[0.3em] text-blue-100/60 mb-0.5">{t("home.scroll")}</span>
+        <div className="w-[22px] h-[36px] border-[1.5px] border-accent/40 rounded-full flex justify-center pt-1.5 shadow-[0_0_15px_rgba(0,229,204,0.1)] bg-black/20 backdrop-blur-sm">
+          <div className="w-[3px] h-[6px] bg-accent rounded-full animate-scroll-wheel shadow-[0_0_8px_rgba(0,229,204,0.8)]" />
         </div>
-        <ChevronDown size={11} className="text-accent/45 -mt-0.5" />
+        <ChevronDown size={14} className="text-accent/60 -mt-1 animate-pulse" />
       </div>
     </section>
   );
