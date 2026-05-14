@@ -1,19 +1,111 @@
-import { Mail, MapPin, Send, MessageSquare, Phone } from "lucide-react";
+import { Mail, MapPin, Send, MessageSquare, Phone, AlertCircle } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import { useState } from "react";
+import { useState, useRef } from "react";
+import emailjs from "@emailjs/browser";
+import { Turnstile } from "@marsidev/react-turnstile";
 
 export function Contact() {
   const { t } = useTranslation();
   const [sending, setSending] = useState(false);
   const [sent, setSent] = useState(false);
+  const formRef = useRef<HTMLFormElement>(null);
+  const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
+  const [error, setError] = useState<string | null>(null);
+  
+  // State to defer Turnstile loading until user interaction
+  const [showTurnstile, setShowTurnstile] = useState(false);
+  // State for email to duplicate it across common EmailJS variables
+  const [emailValue, setEmailValue] = useState("");
+  // State for custom validation errors
+  const [formErrors, setFormErrors] = useState<Record<string, string>>({});
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
+    if (!formRef.current) return;
+
+    // Custom Validation
+    const data = new FormData(formRef.current);
+    const name = data.get("name")?.toString().trim();
+    const email = data.get("user_email")?.toString().trim();
+    const subject = data.get("subject")?.toString().trim();
+    const message = data.get("message")?.toString().trim();
+
+    const errors: Record<string, string> = {};
+
+    if (!name) errors.name = t("contact.validationName") || "Please tell me your name.";
+    
+    if (!email) {
+      errors.email = t("contact.validationEmail") || "I need a valid email to get back to you.";
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
+      errors.email = t("contact.validationEmail") || "I need a valid email to get back to you.";
+    }
+
+    if (!subject) errors.subject = t("contact.validationSubject") || "What's the subject of our conversation?";
+    if (!message) errors.message = t("contact.validationMessage") || "Don't forget to write your message!";
+
+    if (Object.keys(errors).length > 0) {
+      setFormErrors(errors);
+      setShowTurnstile(true);
+      return;
+    }
+
+    if (!turnstileToken) {
+      setError(t("contact.turnstileError") || "Please complete the security check.");
+      return;
+    }
+
     setSending(true);
-    setTimeout(() => {
-      setSending(false);
-      setSent(true);
-    }, 1800);
+    setError(null);
+    setFormErrors({});
+
+    emailjs
+      .sendForm(
+        import.meta.env.VITE_EMAILJS_SERVICE_ID,
+        import.meta.env.VITE_EMAILJS_TEMPLATE_ID,
+        formRef.current,
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      )
+      .then(
+        () => {
+          setSending(false);
+          setSent(true);
+          formRef.current?.reset();
+          setEmailValue("");
+          // Reset the success button state after 5 seconds
+          setTimeout(() => {
+            setSent(false);
+          }, 5000);
+        },
+        (error) => {
+          console.error(error);
+          setSending(false);
+          setError(t("contact.sendError") || "An error occurred, please try again later.");
+        }
+      );
+  };
+
+  const clearError = (field: string) => {
+    if (formErrors[field]) {
+      setFormErrors(prev => ({ ...prev, [field]: "" }));
+    }
+  };
+
+  const getInputClass = (field: string) => {
+    const base = "w-full px-4 py-3 rounded-xl border bg-white/5 text-white text-sm placeholder:text-white/25 outline-none transition-all ";
+    if (formErrors[field]) {
+      return base + "border-red-500/50 focus:border-red-500 focus:ring-1 focus:ring-red-500/30";
+    }
+    return base + "border-white/8 focus:border-accent/50 focus:ring-1 focus:ring-accent/30";
+  };
+
+  const renderError = (field: string) => {
+    if (!formErrors[field]) return null;
+    return (
+      <div className="flex items-center gap-1.5 mt-1.5 text-red-400 animate-fade-in">
+        <AlertCircle size={13} className="shrink-0" />
+        <span className="text-xs">{formErrors[field]}</span>
+      </div>
+    );
   };
 
   const infos = [
@@ -113,7 +205,11 @@ export function Contact() {
           {/* Right: Form */}
           <div className="lg:col-span-3" data-aos="fade-left" data-aos-delay="100">
             <form
+              ref={formRef}
               onSubmit={handleSubmit}
+              noValidate
+              onFocus={() => setShowTurnstile(true)}
+              onChange={() => setShowTurnstile(true)}
               className="flex flex-col gap-5 p-8 rounded-3xl border border-white/6"
               style={{ background: "rgba(255,255,255,0.03)", backdropFilter: "blur(12px)" }}
             >
@@ -130,10 +226,13 @@ export function Contact() {
                   </label>
                   <input
                     type="text"
+                    name="name"
                     required
+                    onChange={() => clearError("name")}
                     placeholder={t("contact.namePlaceholder") || "Your name"}
-                    className="w-full px-4 py-3 rounded-xl border border-white/8 bg-white/5 text-white text-sm placeholder:text-white/25 outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/30 transition-all"
+                    className={getInputClass("name")}
                   />
+                  {renderError("name")}
                 </div>
                 <div className="flex flex-col gap-1.5">
                   <label className="text-blue-100/50 text-[11px] font-bold uppercase tracking-widest">
@@ -141,10 +240,20 @@ export function Contact() {
                   </label>
                   <input
                     type="email"
+                    name="email"
+                    value={emailValue}
+                    onChange={(e) => {
+                      setEmailValue(e.target.value);
+                      clearError("email");
+                    }}
                     required
                     placeholder={t("contact.emailPlaceholder") || "your@email.com"}
-                    className="w-full px-4 py-3 rounded-xl border border-white/8 bg-white/5 text-white text-sm placeholder:text-white/25 outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/30 transition-all"
+                    className={getInputClass("email")}
                   />
+                  {renderError("email")}
+                  {/* Hidden inputs to guarantee compatibility with various EmailJS template variables */}
+                  <input type="hidden" name="user_email" value={emailValue} />
+                  <input type="hidden" name="reply_to" value={emailValue} />
                 </div>
               </div>
 
@@ -155,9 +264,13 @@ export function Contact() {
                 </label>
                 <input
                   type="text"
+                  name="subject"
+                  required
+                  onChange={() => clearError("subject")}
                   placeholder={t("contact.subjectPlaceholder") || "Project inquiry, collaboration..."}
-                  className="w-full px-4 py-3 rounded-xl border border-white/8 bg-white/5 text-white text-sm placeholder:text-white/25 outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/30 transition-all"
+                  className={getInputClass("subject")}
                 />
+                {renderError("subject")}
               </div>
 
               {/* Message */}
@@ -166,11 +279,32 @@ export function Contact() {
                   {t("contact.messageLabel") || "Message"}
                 </label>
                 <textarea
+                  name="message"
                   rows={5}
                   required
+                  onChange={() => clearError("message")}
                   placeholder={t("contact.messagePlaceholder") || "Tell me about your project..."}
-                  className="w-full px-4 py-3 rounded-xl border border-white/8 bg-white/5 text-white text-sm placeholder:text-white/25 outline-none focus:border-accent/50 focus:ring-1 focus:ring-accent/30 transition-all resize-none"
+                  className={`${getInputClass("message")} resize-none`}
                 />
+                {renderError("message")}
+              </div>
+
+              {/* Turnstile Widget and Errors */}
+              <div className="flex flex-col items-center justify-center mt-2">
+                {showTurnstile && (
+                  <Turnstile
+                    siteKey={import.meta.env.VITE_TURNSTILE_SITE_KEY}
+                    onSuccess={(token) => {
+                      setTurnstileToken(token);
+                      setError(null);
+                    }}
+                    options={{
+                      theme: "dark",
+                      appearance: "interaction-only",
+                    }}
+                  />
+                )}
+                {error && <p className="text-red-400/90 text-xs mt-2 text-center">{error}</p>}
               </div>
 
               {/* Submit */}

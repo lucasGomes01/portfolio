@@ -101,6 +101,10 @@
     "messagePlaceholder": "Me fale sobre seu projeto...",
     "sendBtn": "Enviar Mensagem",
     "sending": "Enviando…",
-    "sent": "Mensagem enviada!"
+    "sent": "Mensagem enviada!",
+    "validationName": "Por favor, me diga seu nome.",
+    "validationEmail": "Preciso de um e-mail válido para retornar o contato.",
+    "validationSubject": "Qual o assunto da nossa conversa?",
+    "validationMessage": "Não se esqueça de escrever a mensagem!"
   }
 }

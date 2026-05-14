@@ -99,6 +99,10 @@
     "messagePlaceholder": "Tell me about your project...",
     "sendBtn": "Send Message",
     "sending": "Sending…",
-    "sent": "Message sent!"
+    "sent": "Message sent!",
+    "validationName": "Please tell me your name.",
+    "validationEmail": "I need a valid email to get back to you.",
+    "validationSubject": "What's the subject of our conversation?",
+    "validationMessage": "Don't forget to write your message!"
   }
 }

@@ -21,7 +21,7 @@ export function Projects() {
     <Monitor size={28} className="text-[#10B981]" />,
   ];
 
-  const projectsList: Array<{ title: string; desc: string; active?: boolean; liveLink?: string; githubLink?: string }> = t("projects.list", { returnObjects: true });
+  const projectsList = t("projects.list", { returnObjects: true }) as Array<{ title: string; desc: string; active?: boolean; liveLink?: string; githubLink?: string }>;
 
   const projectImages = [
     "/projects/mentoria_ai.png",
@@ -410,7 +410,7 @@ export function Projects() {
                
                <div className="flex items-center gap-4 relative z-10">
                  <div className="w-16 h-16 shrink-0 rounded-2xl flex items-center justify-center bg-[#020c06] border border-[#10B981]/30 shadow-[0_0_15px_rgba(16,185,129,0.2)]">
-                   {React.cloneElement(selectedProject.icon as React.ReactElement, { size: 36 })}
+                   {React.cloneElement(selectedProject.icon as React.ReactElement<any>, { size: 36 })}
                  </div>
                  <div>
                    <h3 className="text-2xl font-bold text-white mb-1">{selectedProject.title}</h3>
