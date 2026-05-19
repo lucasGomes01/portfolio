@@ -59,31 +59,31 @@ export function Projects() {
   const projectsList = t("projects.list", { returnObjects: true }) as Array<{ title: string; desc: string; active?: boolean; liveLink?: string; githubLink?: string }>;
 
   const projectImages = [
-    `${import.meta.env.BASE_URL}projects/mentoria_ai/mentoria_ia_list.png`,
-    `${import.meta.env.BASE_URL}projects/chart_maker/chart_maker_home.webp`,
-    `${import.meta.env.BASE_URL}projects/lidar_visualizer.png`,
-    `${import.meta.env.BASE_URL}projects/smart_commerce.png`
+    `${import.meta.env.BASE_URL}/projects/mentoria_ai/mentoria_ia_list.png`,
+    `${import.meta.env.BASE_URL}/projects/chart_maker/chart_maker_home.webp`,
+    `${import.meta.env.BASE_URL}/projects/lidar_visualizer.png`,
+    `${import.meta.env.BASE_URL}/projects/smart_commerce.png`
   ];
 
   const projectGalleries = [
     [
-      `${import.meta.env.BASE_URL}projects/mentoria_ai/mentoria_ia_list.png`,
-      `${import.meta.env.BASE_URL}projects/mentoria_ai/mentoria_ia_list_RAG.png`,
-      `${import.meta.env.BASE_URL}projects/mentoria_ai/mentoria_ia_list_RAG_2.png`,
-      `${import.meta.env.BASE_URL}projects/mentoria_ai/mentoria_ia_login.png`,
-      `${import.meta.env.BASE_URL}projects/mentoria_ai/mentoria_ia_cadastro.png`,
+      `${import.meta.env.BASE_URL}/projects/mentoria_ai/mentoria_ia_list.png`,
+      `${import.meta.env.BASE_URL}/projects/mentoria_ai/mentoria_ia_list_RAG.png`,
+      `${import.meta.env.BASE_URL}/projects/mentoria_ai/mentoria_ia_list_RAG_2.png`,
+      `${import.meta.env.BASE_URL}/projects/mentoria_ai/mentoria_ia_login.png`,
+      `${import.meta.env.BASE_URL}/projects/mentoria_ai/mentoria_ia_cadastro.png`,
     ],
     [
-      `${import.meta.env.BASE_URL}projects/chart_maker/chart_maker_home.webp`,
-      `${import.meta.env.BASE_URL}projects/chart_maker/chart_maker_list.webp`,
-      `${import.meta.env.BASE_URL}projects/chart_maker/chart_maker_new.webp`,
-      `${import.meta.env.BASE_URL}projects/chart_maker/chart_maker_charts.webp`,
+      `${import.meta.env.BASE_URL}/projects/chart_maker/chart_maker_home.webp`,
+      `${import.meta.env.BASE_URL}/projects/chart_maker/chart_maker_list.webp`,
+      `${import.meta.env.BASE_URL}/projects/chart_maker/chart_maker_new.webp`,
+      `${import.meta.env.BASE_URL}/projects/chart_maker/chart_maker_charts.webp`,
     ],
     [
-      `${import.meta.env.BASE_URL}projects/lidar_visualizer.png`,
+      `${import.meta.env.BASE_URL}/projects/lidar_visualizer.png`,
     ],
     [
-      `${import.meta.env.BASE_URL}projects/smart_commerce.png`,
+      `${import.meta.env.BASE_URL}/projects/smart_commerce.png`,
     ]
   ];
 

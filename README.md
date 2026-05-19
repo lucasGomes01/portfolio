@@ -1,1 +1,1 @@
-https://lucasgomes01.github.io/portfolio-2/
+https://lucasgomes01.github.io/portfolio
