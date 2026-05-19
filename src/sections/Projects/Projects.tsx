@@ -1,4 +1,4 @@
-import { Monitor, Code2, BarChart3, Layout, Lock, ExternalLink, X, Globe, ArrowRight } from "lucide-react";
+import { Monitor, Code2, BarChart3, Layout, Lock, ExternalLink, X, Globe, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import React, { useState, useEffect, useRef } from "react";
 
@@ -8,6 +8,41 @@ const GithubIcon = () => (
     <path d="M9 18c-4.51 2-5-2-7-2" />
   </svg>
 );
+
+interface SmartImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
+  src: string;
+}
+
+const SmartImage = ({ src, alt, className, ...props }: SmartImageProps) => {
+  const [imgSrc, setImgSrc] = useState(src);
+  const [triedFallback, setTriedFallback] = useState(false);
+
+  useEffect(() => {
+    setImgSrc(src);
+    setTriedFallback(false);
+  }, [src]);
+
+  const handleError = () => {
+    if (!triedFallback) {
+      if (src.endsWith(".png")) {
+        setImgSrc(src.replace(/\.png$/, ".webp"));
+      } else if (src.endsWith(".webp")) {
+        setImgSrc(src.replace(/\.webp$/, ".png"));
+      }
+      setTriedFallback(true);
+    }
+  };
+
+  return (
+    <img
+      src={imgSrc}
+      alt={alt}
+      className={className}
+      onError={handleError}
+      {...props}
+    />
+  );
+};
 
 const GREEN = "#10B981";
 
@@ -24,10 +59,39 @@ export function Projects() {
   const projectsList = t("projects.list", { returnObjects: true }) as Array<{ title: string; desc: string; active?: boolean; liveLink?: string; githubLink?: string }>;
 
   const projectImages = [
-    `${import.meta.env.BASE_URL}projects/mentoria_ai.png`,
-    `${import.meta.env.BASE_URL}projects/chart_maker.png`,
+    `${import.meta.env.BASE_URL}projects/mentoria_ai/mentoria_ia_list.png`,
+    `${import.meta.env.BASE_URL}projects/chart_maker/chart_maker_home.webp`,
     `${import.meta.env.BASE_URL}projects/lidar_visualizer.png`,
     `${import.meta.env.BASE_URL}projects/smart_commerce.png`
+  ];
+
+  const projectGalleries = [
+    [
+      `${import.meta.env.BASE_URL}projects/mentoria_ai/mentoria_ia_list.png`,
+      `${import.meta.env.BASE_URL}projects/mentoria_ai/mentoria_ia_list_RAG.png`,
+      `${import.meta.env.BASE_URL}projects/mentoria_ai/mentoria_ia_list_RAG_2.png`,
+      `${import.meta.env.BASE_URL}projects/mentoria_ai/mentoria_ia_login.png`,
+      `${import.meta.env.BASE_URL}projects/mentoria_ai/mentoria_ia_cadastro.png`,
+    ],
+    [
+      `${import.meta.env.BASE_URL}projects/chart_maker/chart_maker_home.webp`,
+      `${import.meta.env.BASE_URL}projects/chart_maker/chart_maker_list.webp`,
+      `${import.meta.env.BASE_URL}projects/chart_maker/chart_maker_new.webp`,
+      `${import.meta.env.BASE_URL}projects/chart_maker/chart_maker_charts.webp`,
+    ],
+    [
+      `${import.meta.env.BASE_URL}projects/lidar_visualizer.png`,
+    ],
+    [
+      `${import.meta.env.BASE_URL}projects/smart_commerce.png`,
+    ]
+  ];
+
+  const projectTags = [
+    ["React", "TypeScript", ".NET", "PostgreSQL", "Elasticsearch", "Docker", "RabbitMQ", "Supabase"],
+    ["React", "TypeScript", "Tailwind CSS", "Supabase", "OpenAI API"],
+    ["C#", "ESP32", "LIDAR", "Real-time Graphics"],
+    ["React Native", "TypeScript", "REST API", "Mobile App"]
   ];
 
   const projects = projectsList.map((proj, index) => ({
@@ -39,13 +103,8 @@ export function Projects() {
     githubLink: proj.githubLink || "#",
     icon: projectIcons[index] || <Layout size={28} className="text-[#10B981]" />,
     image: projectImages[index],
-    gallery: [
-      projectImages[index],
-      projectImages[(index + 1) % 4],
-      projectImages[(index + 2) % 4],
-    ],
-    // Placeholder tags for the modal
-    tags: ["React", "TypeScript", "Tailwind CSS", "C#", ".NET"],
+    gallery: projectGalleries[index] || [projectImages[index]],
+    tags: projectTags[index] || ["React", "TypeScript", "Tailwind CSS", "C#", ".NET"],
   }));
 
   const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
@@ -321,7 +380,7 @@ export function Projects() {
                     >
                       {/* Project Image */}
                       <div className="w-full h-44 overflow-hidden relative">
-                        <img src={project.image} alt={project.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
+                        <SmartImage src={project.image} alt={project.title} className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105" />
                         <div className="absolute inset-0 bg-black/20 group-hover:bg-transparent transition-colors duration-500" />
                       </div>
 
@@ -330,7 +389,7 @@ export function Projects() {
                         <h3 className="text-white font-bold text-[17px] mb-2 group-hover:text-[#10B981] transition-colors">
                           {project.title}
                         </h3>
-                        <p className="text-[#8c9f96] text-[13px] leading-relaxed mb-6 flex-1">
+                        <p className="text-[#8c9f96] text-[13px] leading-relaxed mb-6 flex-1 line-clamp-3">
                           {project.desc}
                         </p>
 
@@ -466,13 +525,35 @@ export function Projects() {
             </div>
 
             {/* Body Area */}
-            <div className="p-6 md:p-8 overflow-y-auto flex flex-col lg:flex-row gap-8">
+            <div className="p-6 md:p-8 flex flex-col lg:flex-row gap-8 flex-1 min-h-0 overflow-y-auto lg:overflow-hidden">
 
-              {/* Left Side: Carousel */}
-              <div className="flex-1 flex flex-col gap-4">
+              {/* Left Side: Carousel, Technologies & Links */}
+              <div className="w-full lg:w-[480px] flex flex-col gap-4 shrink-0 overflow-y-auto lg:overflow-visible pr-1 lg:pr-0">
                 {/* Main Active Image */}
-                <div className="w-full aspect-video rounded-xl overflow-hidden border border-[#10B981]/20 shadow-[0_0_20px_rgba(16,185,129,0.1)]">
-                  <img src={selectedProject.gallery[currentImageIndex]} alt={selectedProject.title} className="w-full h-full object-cover transition-opacity duration-300" />
+                <div className="w-full aspect-video rounded-xl overflow-hidden border border-[#10B981]/20 shadow-[0_0_20px_rgba(16,185,129,0.1)] relative group/image">
+                  <SmartImage src={selectedProject.gallery[currentImageIndex]} alt={selectedProject.title} className="w-full h-full object-cover transition-opacity duration-300" />
+                  
+                  {selectedProject.gallery.length > 1 && (
+                    <>
+                      {/* Left Arrow */}
+                      <button
+                        onClick={() => setCurrentImageIndex((prev) => (prev === 0 ? selectedProject.gallery.length - 1 : prev - 1))}
+                        className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/60 hover:bg-black/85 text-white/80 hover:text-white flex items-center justify-center border border-white/10 hover:border-white/20 transition-all opacity-0 group-hover/image:opacity-100 focus:opacity-100 z-10 shadow-lg"
+                        aria-label="Previous image"
+                      >
+                        <ChevronLeft size={20} />
+                      </button>
+
+                      {/* Right Arrow */}
+                      <button
+                        onClick={() => setCurrentImageIndex((prev) => (prev === selectedProject.gallery.length - 1 ? 0 : prev + 1))}
+                        className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/60 hover:bg-black/85 text-white/80 hover:text-white flex items-center justify-center border border-white/10 hover:border-white/20 transition-all opacity-0 group-hover/image:opacity-100 focus:opacity-100 z-10 shadow-lg"
+                        aria-label="Next image"
+                      >
+                        <ChevronRight size={20} />
+                      </button>
+                    </>
+                  )}
                 </div>
 
                 {/* Thumbnails */}
@@ -481,54 +562,57 @@ export function Projects() {
                     <button
                       key={i}
                       onClick={() => setCurrentImageIndex(i)}
-                      className={`shrink-0 w-24 aspect-video rounded-lg overflow-hidden border-2 transition-colors duration-300 ${currentImageIndex === i ? 'border-[#10B981]' : 'border-transparent hover:border-[#10B981]/50'}`}
+                      className={`shrink-0 w-20 aspect-video rounded-lg overflow-hidden border-2 transition-colors duration-300 ${currentImageIndex === i ? 'border-[#10B981]' : 'border-transparent hover:border-[#10B981]/50'}`}
                     >
-                      <img src={img} alt={`Preview ${i + 1}`} className="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity" />
+                      <SmartImage src={img} alt={`Preview ${i + 1}`} className="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity" />
                     </button>
                   ))}
                 </div>
-              </div>
 
-              {/* Right Side: Info & Actions */}
-              <div className="w-full lg:w-[400px] flex flex-col">
-                <h4 className="text-white/90 text-lg font-semibold mb-3">{t("projects.aboutProject")}</h4>
-                <p className="text-white/60 text-sm leading-relaxed mb-8">
-                  {selectedProject.desc}
-                </p>
-
-                <h4 className="text-white/90 text-lg font-semibold mb-3">{t("projects.technologies")}</h4>
-                <div className="flex flex-wrap gap-2 mb-8">
-                  {selectedProject.tags.map(tag => (
-                    <span
-                      key={tag}
-                      className="px-3 py-1.5 rounded-md text-xs font-medium text-[#10B981]"
-                      style={{ background: "rgba(16,185,129,0.08)", border: "1px solid rgba(16,185,129,0.2)" }}
-                    >
-                      {tag}
-                    </span>
-                  ))}
+                {/* Technologies */}
+                <div>
+                  <h4 className="text-white/90 text-sm font-semibold mb-2">{t("projects.technologies")}</h4>
+                  <div className="flex flex-wrap gap-1.5">
+                    {selectedProject.tags.map(tag => (
+                      <span
+                        key={tag}
+                        className="px-2.5 py-1 rounded-md text-[11px] font-medium text-[#10B981]"
+                        style={{ background: "rgba(16,185,129,0.08)", border: "1px solid rgba(16,185,129,0.2)" }}
+                      >
+                        {tag}
+                      </span>
+                    ))}
+                  </div>
                 </div>
 
                 {/* Action Buttons */}
-                <div className="flex flex-col gap-3 mt-auto pt-4">
+                <div className="flex gap-3 mt-auto pt-2">
                   <a
                     href={selectedProject.liveLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full inline-flex items-center justify-center gap-2 bg-[#10B981] hover:bg-[#0ea5e9] text-[#020c06] text-sm font-bold px-6 py-3.5 rounded-xl transition-colors duration-300 shadow-[0_0_20px_rgba(16,185,129,0.3)]"
+                    className="flex-1 inline-flex items-center justify-center gap-2 bg-[#10B981] hover:bg-[#0ea5e9] text-[#020c06] text-xs font-bold px-4 py-3 rounded-xl transition-colors duration-300 shadow-[0_0_20px_rgba(16,185,129,0.2)]"
                   >
-                    <Globe size={18} />
+                    <Globe size={14} />
                     {t("projects.livePreview")}
                   </a>
                   <a
                     href={selectedProject.githubLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="w-full inline-flex items-center justify-center gap-2 bg-transparent hover:bg-white/5 text-white text-sm font-semibold px-6 py-3.5 rounded-xl border border-white/20 hover:border-white/40 transition-colors duration-300"
+                    className="flex-1 inline-flex items-center justify-center gap-2 bg-transparent hover:bg-white/5 text-white text-xs font-semibold px-4 py-3 rounded-xl border border-white/20 hover:border-white/40 transition-colors duration-300"
                   >
                     <GithubIcon />
                     {t("projects.sourceCode")}
                   </a>
+                </div>
+              </div>
+
+              {/* Right Side: Scrollable Description ONLY */}
+              <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar min-h-0">
+                <h4 className="text-white/90 text-lg font-semibold mb-3">{t("projects.aboutProject")}</h4>
+                <div className="text-[#8c9f96] text-sm leading-relaxed whitespace-pre-line space-y-4 pr-1">
+                  {selectedProject.desc}
                 </div>
               </div>
 

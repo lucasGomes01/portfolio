@@ -53,17 +53,17 @@
     "list": [
       {
         "title": "MentoriaAI",
-        "desc": "Intelligent mentoring platform developed with React, .NET, PostgreSQL, Elasticsearch and Docker. It connects users to mentors efficiently through semantic searches.",
+        "desc": "MentoriaAI is an intelligent mentoring platform developed with a microservices architecture, focused on performance, scalability, and efficient information retrieval. The project utilizes React, .NET, PostgreSQL, Docker, RabbitMQ, Elasticsearch, and Supabase for authentication and user management.\n\nThe platform implements advanced Information Retrieval (IR) mechanisms with BM25 ranking and Retrieval-Augmented Generation (RAG) architecture, using vector embeddings for semantic searches and contextualized AI responses.\n\nAsynchronous communication between services is handled by RabbitMQ, ensuring higher reliability and distributed task processing. Elasticsearch is responsible for high-performance indexing and searching, enabling fast and efficient content recovery.\n\nThe project follows Clean Architecture best practices, microservices organization, and integration across diverse technologies to build modern, decoupled solutions.",
         "active": true,
         "liveLink": "https://lucasgomes.dev/mentoria-ai",
-        "githubLink": "https://github.com/lucasGomes01/mentoria-ai"
+        "githubLink": "https://github.com/lucasGomes01/MentoriaAI"
       },
       {
         "title": "ChartMaker",
-        "desc": "Web application for creating and viewing dynamic charts. Developed with a focus on data analysis, allowing the generation of interactive and customizable dashboards simply and quickly.",
+        "desc": "ChartMaker is a web application designed to create intelligent charts from user-submitted data. The project utilizes React for the front-end, .NET for building the API, and PostgreSQL for data persistence, forming a modern and organized architecture.\n\nThe platform allows users to input information manually in a text field or upload spreadsheets, providing a dynamic and intuitive experience in generating visualizations and analysis.\n\nThe system integrates artificial intelligence through the ChatGPT API, which is responsible for automatically interpreting, structuring, and formatting data. After processing, the application automatically generates different chart models, facilitating the visualization and interpretation of information.\n\nThe project was developed with a focus on user experience, service integration, and architectural best practices, prioritizing organization, component reusability, and code maintenance.",
         "active": true,
         "liveLink": "https://lucasgomes.dev/chartmaker",
-        "githubLink": "https://github.com/lucasGomes01/chartmaker"
+        "githubLink": "https://github.com/lucasGomes01/chart-maker"
       },
       {
         "title": "LIDAR Visualizer",
@@ -116,6 +116,8 @@
     "validationName": "Please tell me your name.",
     "validationEmail": "I need a valid email to get back to you.",
     "validationSubject": "What's the subject of our conversation?",
-    "validationMessage": "Don't forget to write your message!"
+    "validationMessage": "Don't forget to write your message!",
+    "turnstileError": "Please complete the security check before sending.",
+    "turnstileLoadError": "Security check failed to load. Please refresh the page and try again."
   }
 }

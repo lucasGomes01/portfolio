@@ -11,6 +11,7 @@ export function Contact() {
   const formRef = useRef<HTMLFormElement>(null);
   const [turnstileToken, setTurnstileToken] = useState<string | null>(null);
   const [error, setError] = useState<string | null>(null);
+  const [turnstileError, setTurnstileError] = useState(false);
   
   // State to defer Turnstile loading until user interaction
   const [showTurnstile, setShowTurnstile] = useState(false);
@@ -299,12 +300,26 @@ export function Contact() {
                     onSuccess={(token) => {
                       setTurnstileToken(token);
                       setError(null);
+                      setTurnstileError(false);
+                    }}
+                    onError={() => {
+                      setTurnstileToken(null);
+                      setTurnstileError(true);
+                    }}
+                    onExpire={() => {
+                      setTurnstileToken(null);
+                      setTurnstileError(false);
                     }}
                     options={{
                       theme: "dark",
-                      appearance: "interaction-only",
+                      appearance: "always",
                     }}
                   />
+                )}
+                {turnstileError && (
+                  <p className="text-yellow-400/90 text-xs mt-2 text-center">
+                    {t("contact.turnstileLoadError") || "Security check failed to load. Please refresh the page and try again."}
+                  </p>
                 )}
                 {error && <p className="text-red-400/90 text-xs mt-2 text-center">{error}</p>}
               </div>
