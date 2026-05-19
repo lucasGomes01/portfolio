@@ -1,4 +1,4 @@
-import { Mail, MapPin, Send, MessageSquare, Phone, AlertCircle } from "lucide-react";
+import { Mail, MapPin, Send, MessageSquare, AlertCircle } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useState, useRef } from "react";
 import emailjs from "@emailjs/browser";

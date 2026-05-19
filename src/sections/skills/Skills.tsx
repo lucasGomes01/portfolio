@@ -17,6 +17,7 @@ const skillGroups: { label: string; dot: string; aosDelay: number; skills: Skill
       { name: "Expo",         icon: `${CDN}/expo/expo-original.svg` },
       { name: "JavaScript",   icon: `${CDN}/javascript/javascript-original.svg` },
       { name: "TypeScript",   icon: `${CDN}/typescript/typescript-original.svg` },
+      { name: "Tailwind CSS", icon: `${CDN}/tailwindcss/tailwindcss-original.svg` },
       { name: "HTML",         icon: `${CDN}/html5/html5-original.svg` },
       { name: "CSS",          icon: `${CDN}/css3/css3-original.svg` },
       { name: "jQuery",       icon: `${CDN}/jquery/jquery-original.svg` },
