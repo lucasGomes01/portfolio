@@ -1,9 +1,11 @@
 import mePhoto from "../../assets/me.png";
 import { useTranslation } from "react-i18next";
 import { Code2, Briefcase, Layers, Download } from "lucide-react";
+import { useCVRole } from "../../hooks/useCVRole";
 
 export function About() {
   const { t } = useTranslation();
+  const { cvPath, cvFilename } = useCVRole();
   const yearsOfExperience = new Date().getFullYear() - 2022;
 
   return (
@@ -124,13 +126,17 @@ export function About() {
             ))}
           </div>
 
-          <button
-            className="flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold text-sm transition-all hover:-translate-y-1 border border-accent/30 hover:border-accent text-white hover:text-accent"
+          <a
+            href={cvPath}
+            download={cvFilename}
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex items-center gap-2 px-7 py-3.5 rounded-full font-semibold text-sm transition-all hover:-translate-y-1 border border-accent/30 hover:border-accent text-white hover:text-accent cursor-pointer"
             style={{ background: "rgba(0,229,204,0.06)", boxShadow: "0 0 20px rgba(0,229,204,0.05)" }}
           >
             <Download size={16} />
             {t("about.cvBtn")}
-          </button>
+          </a>
         </div>
       </div>
     </section>

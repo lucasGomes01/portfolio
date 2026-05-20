@@ -52,17 +52,13 @@ export function Projects() {
   const projectIcons = [
     <Layout size={28} className="text-[#10B981]" />,
     <BarChart3 size={28} className="text-[#10B981]" />,
-    <Code2 size={28} className="text-[#10B981]" />,
-    <Monitor size={28} className="text-[#10B981]" />,
   ];
 
   const projectsList = t("projects.list", { returnObjects: true }) as Array<{ title: string; desc: string; active?: boolean; liveLink?: string; githubLink?: string }>;
 
   const projectImages = [
     `${import.meta.env.BASE_URL}/projects/mentoria_ai/mentoria_ia_list.png`,
-    `${import.meta.env.BASE_URL}/projects/chart_maker/chart_maker_home.webp`,
-    `${import.meta.env.BASE_URL}/projects/lidar_visualizer.png`,
-    `${import.meta.env.BASE_URL}/projects/smart_commerce.png`
+    `${import.meta.env.BASE_URL}/projects/chart_maker/chart_maker_home.webp`
   ];
 
   const projectGalleries = [
@@ -78,20 +74,12 @@ export function Projects() {
       `${import.meta.env.BASE_URL}/projects/chart_maker/chart_maker_list.webp`,
       `${import.meta.env.BASE_URL}/projects/chart_maker/chart_maker_new.webp`,
       `${import.meta.env.BASE_URL}/projects/chart_maker/chart_maker_charts.webp`,
-    ],
-    [
-      `${import.meta.env.BASE_URL}/projects/lidar_visualizer.png`,
-    ],
-    [
-      `${import.meta.env.BASE_URL}/projects/smart_commerce.png`,
     ]
   ];
 
   const projectTags = [
     ["React", "TypeScript", ".NET", "PostgreSQL", "Elasticsearch", "Docker", "RabbitMQ", "Supabase"],
-    ["React", "TypeScript", "Tailwind CSS", "Supabase", "OpenAI API"],
-    ["C#", "ESP32", "LIDAR", "Real-time Graphics"],
-    ["React Native", "TypeScript", "REST API", "Mobile App"]
+    ["React", "TypeScript", "Tailwind CSS", "Supabase", "OpenAI API"]
   ];
 
   const projects = projectsList.map((proj, index) => ({
@@ -110,41 +98,7 @@ export function Projects() {
   const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-  const sectionRef = useRef<HTMLElement>(null);
-  const laptopScrollRef = useRef<HTMLDivElement>(null);
-  const phoneScrollRef = useRef<HTMLDivElement>(null);
 
-  // Scroll Hijacking Logic
-  useEffect(() => {
-    const handleScroll = () => {
-      if (!sectionRef.current) return;
-      
-      const rect = sectionRef.current.getBoundingClientRect();
-      const viewportHeight = window.innerHeight;
-      
-      const scrollableDistance = rect.height - viewportHeight;
-      if (scrollableDistance <= 0) return;
-      
-      const scrollProgress = -rect.top / scrollableDistance;
-      const clampedProgress = Math.max(0, Math.min(1, scrollProgress));
-      
-      if (laptopScrollRef.current) {
-        const maxScroll = laptopScrollRef.current.scrollHeight - laptopScrollRef.current.clientHeight;
-        laptopScrollRef.current.scrollTop = maxScroll * clampedProgress;
-      }
-      
-      if (phoneScrollRef.current) {
-        const maxScroll = phoneScrollRef.current.scrollHeight - phoneScrollRef.current.clientHeight;
-        phoneScrollRef.current.scrollTop = maxScroll * clampedProgress;
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    // Run once on mount to set initial position
-    handleScroll();
-    
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
 
   // Prevent background scrolling when modal is open
   useEffect(() => {
@@ -158,8 +112,8 @@ export function Projects() {
   }, [selectedProject]);
 
   return (
-    <section id="projects" ref={sectionRef} className="relative bg-transparent h-[250vh] z-10">
-      <div className="sticky top-0 h-screen w-full flex flex-col items-center justify-center overflow-hidden py-10 md:py-16">
+    <section id="projects" className="relative bg-transparent h-auto z-10 py-20 md:py-28">
+      <div className="w-full flex flex-col items-center justify-center py-10 md:py-16">
         {/* SECTION TITLE */}
         <div className="text-center mb-6 md:mb-10" data-aos="fade-down">
         <h2 className="text-white text-4xl md:text-5xl font-bold tracking-tight">
@@ -238,7 +192,7 @@ export function Projects() {
             </div>
 
             {/* Project list (single col on phone) */}
-            <div ref={phoneScrollRef} className="relative z-10 px-3 pb-6 space-y-3 overflow-hidden" style={{ maxHeight: "520px" }}>
+            <div className="relative z-10 px-3 pb-6 space-y-3" style={{ maxHeight: "520px" }}>
               {projects.map((project, index) => (
                 <div
                   key={project.id}
@@ -347,7 +301,7 @@ export function Projects() {
             </div>
 
             {/* Browser Content */}
-            <div ref={laptopScrollRef} className="relative overflow-hidden [&::-webkit-scrollbar]:hidden" style={{ background: "#020c06", height: "480px" }}>
+            <div className="relative overflow-hidden" style={{ background: "#020c06", height: "480px" }}>
               {/* Grid bg */}
               <div className="absolute inset-0 pointer-events-none"
                 style={{

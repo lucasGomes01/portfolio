@@ -64,20 +64,6 @@
         "active": true,
         "liveLink": "https://lucasgomes.dev/chartmaker",
         "githubLink": "https://github.com/lucasGomes01/chart-maker"
-      },
-      {
-        "title": "LIDAR Visualizer",
-        "desc": "System for real-time visualization of LIDAR sensor data using ESP32 and C#. It converts distance readings into XY coordinates for graphical display and obstacle detection.",
-        "active": false,
-        "liveLink": "https://lucasgomes.dev/lidar",
-        "githubLink": "https://github.com/lucasGomes01/lidar"
-      },
-      {
-        "title": "Smart Commerce App",
-        "desc": "Mobile application developed in React Native to promote local businesses. The system features dynamic listings, reviews, business hours, and API integration for data management.",
-        "active": false,
-        "liveLink": "https://lucasgomes.dev/smartcommerce",
-        "githubLink": "https://github.com/lucasGomes01/smartcommerce"
       }
     ]
   },
