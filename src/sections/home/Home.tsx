@@ -28,7 +28,8 @@ const TECHS = [
 
 export function Home() {
   const { t } = useTranslation();
-  const { cvPath, cvFilename } = useCVRole();
+  const { role, cvPath, cvFilename } = useCVRole();
+  const isBackend = role === "backend";
 
   return (
     <section
@@ -84,8 +85,13 @@ export function Home() {
               data-aos="fade-up"
               data-aos-delay="100"
             >
-              <span className="block text-white">{t("home.hero1")}</span>
-              <span className="block"><span className="text-accent">{t("home.hero2Accent")}</span> <span className="text-white">{t("home.hero2")}</span></span>
+              <span className="block text-white">{isBackend ? t("home.hero1Backend") : t("home.hero1")}</span>
+              <span className="block">
+                <span className="text-accent">
+                  {isBackend ? t("home.hero2AccentBackend") : t("home.hero2Accent")}
+                </span>{" "}
+                <span className="text-white">{t("home.hero2")}</span>
+              </span>
               <span className="block"><span className="text-white">{t("home.hero3")}</span> <span className="text-[#3b82f6]">{t("home.hero3Accent")}</span></span>
             </h1>
 
@@ -191,9 +197,10 @@ export function Home() {
       </div>
 
       {/* ── Bottom scroll cue ── */}
+      {/* Positioned at bottom-28 so cookie banner (fixed bottom-0 ~80px tall) does not cover it */}
       <div 
         onClick={() => document.getElementById('projects')?.scrollIntoView({ behavior: 'smooth' })}
-        className="hidden lg:flex absolute bottom-8 left-1/2 -translate-x-1/2 flex-col items-center gap-1.5 opacity-60 hover:opacity-100 transition-opacity duration-300 cursor-pointer select-none z-40"
+        className="hidden lg:flex absolute bottom-28 left-1/2 -translate-x-1/2 flex-col items-center gap-1.5 opacity-80 hover:opacity-100 transition-opacity duration-300 cursor-pointer select-none z-40"
       >
         <div className="flex flex-col items-center gap-1.5 animate-float">
           <span className="text-[9px] font-black uppercase tracking-[0.3em] text-blue-100/60 mb-0.5">{t("home.scroll")}</span>

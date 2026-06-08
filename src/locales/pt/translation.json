@@ -9,7 +9,9 @@
   "home": {
     "greeting": "Olá, sou Lucas",
     "hero1": "Desenvolvedor",
-    "hero2Accent": "fullstack",
+    "hero1Backend": "Desenvolvedor",
+    "hero2Accent": "Full Stack",
+    "hero2AccentBackend": "Back-end",
     "hero2": "que transforma",
     "hero3": "ideias em",
     "hero3Accent": "soluções.",
@@ -19,6 +21,8 @@
     "connect": "Conecte-se",
     "projectsBtn": "Ver meus projetos",
     "cvBtn": "Download CV",
+    "cvVersionFullstack": "Versão Full-Stack",
+    "cvVersionBackend": "Versão Back-End",
     "scroll": "Scroll",
     "openToWork": "Disponível para projetos"
   },
