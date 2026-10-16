@@ -112,6 +112,22 @@ export function Projects() {
     return () => { document.body.style.overflow = 'unset'; };
   }, [selectedProject]);
 
+  const galleryLength = selectedProject?.gallery.length ?? 0;
+  const showPrevImage = () => setCurrentImageIndex((prev) => (prev === 0 ? galleryLength - 1 : prev - 1));
+  const showNextImage = () => setCurrentImageIndex((prev) => (prev === galleryLength - 1 ? 0 : prev + 1));
+
+  // Keyboard: Esc closes, arrows navigate the gallery
+  useEffect(() => {
+    if (!selectedProject) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") setSelectedProject(null);
+      else if (e.key === "ArrowLeft") setCurrentImageIndex((prev) => (prev === 0 ? galleryLength - 1 : prev - 1));
+      else if (e.key === "ArrowRight") setCurrentImageIndex((prev) => (prev === galleryLength - 1 ? 0 : prev + 1));
+    };
+    window.addEventListener("keydown", onKeyDown);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [selectedProject, galleryLength]);
+
   return (
     <section id="projects" className="relative bg-transparent h-auto z-10 py-20 md:py-28">
       <div className="w-full flex flex-col items-center justify-center px-4 md:px-6 py-10 md:py-16">
@@ -439,7 +455,7 @@ export function Projects() {
           PROJECT MODAL
       ═══════════════════════════════ */}
       {selectedProject && createPortal(
-        <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
+        <div className="fixed inset-0 z-[100] flex items-center justify-center p-3 sm:p-4">
           {/* Backdrop */}
           <div
             className="absolute inset-0 bg-[#020c06]/80 backdrop-blur-sm transition-opacity"
@@ -448,24 +464,26 @@ export function Projects() {
 
           {/* Modal Content */}
           <div
-            className="relative w-full max-w-5xl bg-gradient-to-b from-[#071712] to-[#030e08] rounded-2xl border border-[#10B981]/30 shadow-[0_20px_60px_rgba(16,185,129,0.15)] overflow-hidden flex flex-col transform transition-all animate-fade-in"
-            style={{ maxHeight: '76vh' }}
+            role="dialog"
+            aria-modal="true"
+            aria-label={selectedProject.title}
+            className="relative w-full max-w-5xl max-h-[92dvh] lg:max-h-[88dvh] bg-gradient-to-b from-[#071712] to-[#030e08] rounded-2xl border border-[#10B981]/30 shadow-[0_20px_60px_rgba(16,185,129,0.15)] overflow-hidden flex flex-col animate-fade-in"
           >
-            {/* Header Area */}
-            <div className="p-6 md:p-8 flex items-start justify-between border-b border-[#10B981]/10 relative overflow-hidden shrink-0">
+            {/* Header Area (compact) */}
+            <div className="flex items-center justify-between gap-3 px-4 py-3 md:px-6 md:py-4 border-b border-[#10B981]/10 relative overflow-hidden shrink-0">
               {/* Decorative glow inside modal header */}
-              <div className="absolute top-0 right-0 w-64 h-64 bg-[#10B981]/10 rounded-full blur-[80px] -translate-y-1/2 translate-x-1/3 pointer-events-none" />
+              <div className="absolute top-0 right-0 w-48 h-48 bg-[#10B981]/10 rounded-full blur-[70px] -translate-y-1/2 translate-x-1/3 pointer-events-none" />
 
-              <div className="flex items-center gap-4 relative z-10">
-                <div className="w-16 h-16 shrink-0 rounded-2xl flex items-center justify-center bg-[#020c06] border border-[#10B981]/30 shadow-[0_0_15px_rgba(16,185,129,0.2)]">
-                  {React.cloneElement(selectedProject.icon as React.ReactElement<any>, { size: 36 })}
+              <div className="flex items-center gap-3 min-w-0 relative z-10">
+                <div className="w-10 h-10 shrink-0 rounded-xl flex items-center justify-center bg-[#020c06] border border-[#10B981]/30 shadow-[0_0_12px_rgba(16,185,129,0.2)]">
+                  {React.cloneElement(selectedProject.icon as React.ReactElement<any>, { size: 22 })}
                 </div>
-                <div>
-                  <h3 className="text-2xl font-bold text-white mb-1">{selectedProject.title}</h3>
+                <div className="min-w-0">
+                  <h3 className="text-lg md:text-xl font-bold text-white leading-tight truncate">{selectedProject.title}</h3>
                   {selectedProject.active && (
-                    <div className="flex items-center gap-2">
-                      <span className="w-2 h-2 rounded-full bg-[#10B981] animate-pulse" />
-                      <span className="text-[#10B981]/80 text-xs font-mono uppercase tracking-widest">{t("projects.activeStatus", "Active Project")}</span>
+                    <div className="flex items-center gap-1.5 mt-0.5">
+                      <span className="w-1.5 h-1.5 rounded-full bg-[#10B981] animate-pulse" />
+                      <span className="text-[#10B981]/80 text-[10px] font-mono uppercase tracking-widest">{t("projects.activeStatus", "Active Project")}</span>
                     </div>
                   )}
                 </div>
@@ -473,101 +491,112 @@ export function Projects() {
 
               <button
                 onClick={() => setSelectedProject(null)}
-                className="relative z-50 text-white/50 hover:text-white bg-white/5 hover:bg-white/10 w-10 h-10 shrink-0 rounded-full flex items-center justify-center transition-colors"
+                className="relative z-10 text-white/50 hover:text-white bg-white/5 hover:bg-white/10 w-9 h-9 shrink-0 rounded-full flex items-center justify-center transition-colors"
+                aria-label="Close"
               >
-                <X size={20} />
+                <X size={18} />
               </button>
             </div>
 
-            {/* Body Area */}
-            <div className="p-6 md:p-8 flex flex-col lg:flex-row gap-8 flex-1 min-h-0 overflow-y-auto lg:overflow-hidden">
+            {/* Body Area: whole body scrolls on small screens; on lg only the description scrolls */}
+            <div className="flex-1 min-h-0 overflow-y-auto lg:overflow-hidden custom-scrollbar p-4 md:p-6 flex flex-col lg:flex-row gap-5 lg:gap-8">
 
-              {/* Left Side: Carousel, Technologies & Links */}
-              <div className="w-full lg:w-[480px] flex flex-col gap-4 shrink-0 min-h-0 overflow-y-auto pr-1 custom-scrollbar">
+              {/* Left Side: Gallery (image width is capped by the available height so thumbnails always fit) */}
+              <div className="w-full lg:w-[min(480px,calc((88dvh_-_190px)*16/9))] shrink-0 flex flex-col gap-3">
                 {/* Main Active Image */}
-                <div className="w-full aspect-video shrink-0 rounded-xl overflow-hidden border border-[#10B981]/20 shadow-[0_0_20px_rgba(16,185,129,0.1)] relative group/image">
-                  <SmartImage src={selectedProject.gallery[currentImageIndex]} alt={selectedProject.title} className="w-full h-full object-cover transition-opacity duration-300" />
-                  
+                <div className="w-full aspect-video shrink-0 rounded-xl overflow-hidden border border-[#10B981]/20 shadow-[0_0_20px_rgba(16,185,129,0.1)] relative group/image bg-[#020c06]">
+                  <SmartImage src={selectedProject.gallery[currentImageIndex]} alt={selectedProject.title} className="w-full h-full object-cover" />
+
                   {selectedProject.gallery.length > 1 && (
                     <>
-                      {/* Left Arrow */}
                       <button
-                        onClick={() => setCurrentImageIndex((prev) => (prev === 0 ? selectedProject.gallery.length - 1 : prev - 1))}
-                        className="absolute left-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/60 hover:bg-black/85 text-white/80 hover:text-white flex items-center justify-center border border-white/10 hover:border-white/20 transition-all opacity-0 group-hover/image:opacity-100 focus:opacity-100 z-10 shadow-lg"
+                        onClick={showPrevImage}
+                        className="absolute left-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/60 hover:bg-black/85 text-white/80 hover:text-white flex items-center justify-center border border-white/10 hover:border-white/20 transition-all lg:opacity-0 lg:group-hover/image:opacity-100 focus:opacity-100 z-10 shadow-lg"
                         aria-label="Previous image"
                       >
                         <ChevronLeft size={20} />
                       </button>
 
-                      {/* Right Arrow */}
                       <button
-                        onClick={() => setCurrentImageIndex((prev) => (prev === selectedProject.gallery.length - 1 ? 0 : prev + 1))}
-                        className="absolute right-3 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/60 hover:bg-black/85 text-white/80 hover:text-white flex items-center justify-center border border-white/10 hover:border-white/20 transition-all opacity-0 group-hover/image:opacity-100 focus:opacity-100 z-10 shadow-lg"
+                        onClick={showNextImage}
+                        className="absolute right-2 top-1/2 -translate-y-1/2 w-9 h-9 rounded-full bg-black/60 hover:bg-black/85 text-white/80 hover:text-white flex items-center justify-center border border-white/10 hover:border-white/20 transition-all lg:opacity-0 lg:group-hover/image:opacity-100 focus:opacity-100 z-10 shadow-lg"
                         aria-label="Next image"
                       >
                         <ChevronRight size={20} />
                       </button>
+
+                      {/* Counter */}
+                      <span className="absolute bottom-2 right-2 px-2 py-0.5 rounded-md bg-black/60 text-white/80 text-[11px] font-mono z-10">
+                        {currentImageIndex + 1} / {selectedProject.gallery.length}
+                      </span>
                     </>
                   )}
                 </div>
 
                 {/* Thumbnails */}
-                <div className="flex shrink-0 gap-3 overflow-x-auto pb-2 [&::-webkit-scrollbar]:hidden">
-                  {selectedProject.gallery.map((img, i) => (
-                    <button
-                      key={i}
-                      onClick={() => setCurrentImageIndex(i)}
-                      className={`shrink-0 w-20 aspect-video rounded-lg overflow-hidden border-2 transition-colors duration-300 ${currentImageIndex === i ? 'border-[#10B981]' : 'border-transparent hover:border-[#10B981]/50'}`}
-                    >
-                      <SmartImage src={img} alt={`Preview ${i + 1}`} className="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity" />
-                    </button>
-                  ))}
-                </div>
-
-                {/* Technologies */}
-                <div>
-                  <h4 className="text-white/90 text-sm font-semibold mb-2">{t("projects.technologies")}</h4>
-                  <div className="flex flex-wrap gap-1.5">
-                    {selectedProject.tags.map(tag => (
-                      <span
-                        key={tag}
-                        className="px-2.5 py-1 rounded-md text-[11px] font-medium text-[#10B981]"
-                        style={{ background: "rgba(16,185,129,0.08)", border: "1px solid rgba(16,185,129,0.2)" }}
+                {selectedProject.gallery.length > 1 && (
+                  <div className="flex shrink-0 gap-2 overflow-x-auto pb-1 [&::-webkit-scrollbar]:hidden">
+                    {selectedProject.gallery.map((img, i) => (
+                      <button
+                        key={i}
+                        onClick={() => setCurrentImageIndex(i)}
+                        className={`shrink-0 w-16 md:w-20 aspect-video rounded-md overflow-hidden border-2 transition-colors duration-300 ${currentImageIndex === i ? 'border-[#10B981]' : 'border-transparent hover:border-[#10B981]/50'}`}
+                        aria-label={`Preview ${i + 1}`}
                       >
-                        {tag}
-                      </span>
+                        <SmartImage src={img} alt={`Preview ${i + 1}`} className="w-full h-full object-cover opacity-80 hover:opacity-100 transition-opacity" />
+                      </button>
                     ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Right Side: Description (scrolls) + Technologies & Links (pinned) */}
+              <div className="flex-1 min-w-0 flex flex-col gap-4 lg:min-h-0">
+                <div className="lg:flex-1 lg:min-h-0 lg:overflow-y-auto pr-1 custom-scrollbar">
+                  <h4 className="text-white/90 text-base font-semibold mb-2">{t("projects.aboutProject")}</h4>
+                  <div className="text-[#8c9f96] text-sm leading-relaxed whitespace-pre-line">
+                    {selectedProject.desc}
                   </div>
                 </div>
 
-                {/* Action Buttons */}
-                <div className="flex gap-3 mt-auto pt-2">
-                  <a
-                    href={selectedProject.liveLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1 inline-flex items-center justify-center gap-2 bg-[#10B981] hover:bg-[#0ea5e9] text-[#020c06] text-xs font-bold px-4 py-3 rounded-xl transition-colors duration-300 shadow-[0_0_20px_rgba(16,185,129,0.2)]"
-                  >
-                    <Globe size={14} />
-                    {t("projects.livePreview")}
-                  </a>
-                  <a
-                    href={selectedProject.githubLink}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="flex-1 inline-flex items-center justify-center gap-2 bg-transparent hover:bg-white/5 text-white text-xs font-semibold px-4 py-3 rounded-xl border border-white/20 hover:border-white/40 transition-colors duration-300"
-                  >
-                    <GithubIcon />
-                    {t("projects.sourceCode")}
-                  </a>
-                </div>
-              </div>
+                <div className="shrink-0 flex flex-col gap-3 order-first lg:order-last pb-4 border-b lg:pb-0 lg:border-b-0 lg:pt-4 lg:border-t border-[#10B981]/10">
+                  {/* Technologies */}
+                  <div>
+                    <h4 className="text-white/90 text-xs font-semibold uppercase tracking-wider mb-2">{t("projects.technologies")}</h4>
+                    <div className="flex flex-wrap gap-1.5">
+                      {selectedProject.tags.map(tag => (
+                        <span
+                          key={tag}
+                          className="px-2.5 py-1 rounded-md text-[11px] font-medium text-[#10B981]"
+                          style={{ background: "rgba(16,185,129,0.08)", border: "1px solid rgba(16,185,129,0.2)" }}
+                        >
+                          {tag}
+                        </span>
+                      ))}
+                    </div>
+                  </div>
 
-              {/* Right Side: Scrollable Description ONLY */}
-              <div className="flex-1 overflow-y-auto pr-2 custom-scrollbar min-h-0">
-                <h4 className="text-white/90 text-lg font-semibold mb-3">{t("projects.aboutProject")}</h4>
-                <div className="text-[#8c9f96] text-sm leading-relaxed whitespace-pre-line space-y-4 pr-1">
-                  {selectedProject.desc}
+                  {/* Action Buttons */}
+                  <div className="flex gap-3">
+                    <a
+                      href={selectedProject.liveLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 inline-flex items-center justify-center gap-2 bg-[#10B981] hover:bg-[#0ea5e9] text-[#020c06] text-xs font-bold px-4 py-2.5 rounded-xl transition-colors duration-300 shadow-[0_0_20px_rgba(16,185,129,0.2)]"
+                    >
+                      <Globe size={14} />
+                      {t("projects.livePreview")}
+                    </a>
+                    <a
+                      href={selectedProject.githubLink}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex-1 inline-flex items-center justify-center gap-2 bg-transparent hover:bg-white/5 text-white text-xs font-semibold px-4 py-2.5 rounded-xl border border-white/20 hover:border-white/40 transition-colors duration-300"
+                    >
+                      <GithubIcon />
+                      {t("projects.sourceCode")}
+                    </a>
+                  </div>
                 </div>
               </div>
 
