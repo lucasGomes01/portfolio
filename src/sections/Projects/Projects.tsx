@@ -1,6 +1,7 @@
 import { Monitor, Code2, BarChart3, Layout, Lock, ExternalLink, X, Globe, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import React, { useState, useEffect, useRef } from "react";
+import { createPortal } from "react-dom";
 
 const GithubIcon = () => (
   <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round">
@@ -113,7 +114,7 @@ export function Projects() {
 
   return (
     <section id="projects" className="relative bg-transparent h-auto z-10 py-20 md:py-28">
-      <div className="w-full flex flex-col items-center justify-center py-10 md:py-16">
+      <div className="w-full flex flex-col items-center justify-center px-4 md:px-6 py-10 md:py-16">
         {/* SECTION TITLE */}
         <div className="text-center mb-6 md:mb-10" data-aos="fade-down">
         <h2 className="text-white text-4xl md:text-5xl font-bold tracking-tight">
@@ -138,7 +139,7 @@ export function Projects() {
           PHONE (mobile only, < md)
       ═══════════════════════════════ */}
       <div
-        className="md:hidden w-[320px] flex flex-col items-center"
+        className="md:hidden w-full max-w-[320px] flex flex-col items-center"
         data-aos="zoom-in"
         data-aos-duration="900"
       >
@@ -301,7 +302,7 @@ export function Projects() {
             </div>
 
             {/* Browser Content */}
-            <div className="relative overflow-hidden" style={{ background: "#020c06", height: "480px" }}>
+            <div className="relative overflow-hidden" style={{ background: "#020c06", minHeight: "480px" }}>
               {/* Grid bg */}
               <div className="absolute inset-0 pointer-events-none"
                 style={{
@@ -437,7 +438,7 @@ export function Projects() {
       {/* ═══════════════════════════════
           PROJECT MODAL
       ═══════════════════════════════ */}
-      {selectedProject && (
+      {selectedProject && createPortal(
         <div className="fixed inset-0 z-[100] flex items-center justify-center p-4">
           {/* Backdrop */}
           <div
@@ -482,9 +483,9 @@ export function Projects() {
             <div className="p-6 md:p-8 flex flex-col lg:flex-row gap-8 flex-1 min-h-0 overflow-y-auto lg:overflow-hidden">
 
               {/* Left Side: Carousel, Technologies & Links */}
-              <div className="w-full lg:w-[480px] flex flex-col gap-4 shrink-0 overflow-y-auto lg:overflow-visible pr-1 lg:pr-0">
+              <div className="w-full lg:w-[480px] flex flex-col gap-4 shrink-0 min-h-0 overflow-y-auto pr-1 custom-scrollbar">
                 {/* Main Active Image */}
-                <div className="w-full aspect-video rounded-xl overflow-hidden border border-[#10B981]/20 shadow-[0_0_20px_rgba(16,185,129,0.1)] relative group/image">
+                <div className="w-full aspect-video shrink-0 rounded-xl overflow-hidden border border-[#10B981]/20 shadow-[0_0_20px_rgba(16,185,129,0.1)] relative group/image">
                   <SmartImage src={selectedProject.gallery[currentImageIndex]} alt={selectedProject.title} className="w-full h-full object-cover transition-opacity duration-300" />
                   
                   {selectedProject.gallery.length > 1 && (
@@ -511,7 +512,7 @@ export function Projects() {
                 </div>
 
                 {/* Thumbnails */}
-                <div className="flex gap-3 overflow-x-auto pb-2 [&::-webkit-scrollbar]:hidden">
+                <div className="flex shrink-0 gap-3 overflow-x-auto pb-2 [&::-webkit-scrollbar]:hidden">
                   {selectedProject.gallery.map((img, i) => (
                     <button
                       key={i}
@@ -572,7 +573,8 @@ export function Projects() {
 
             </div>
           </div>
-        </div>
+        </div>,
+        document.body
       )}
     </section>
   );
