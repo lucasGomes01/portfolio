@@ -21,7 +21,13 @@ function setWithExpiry(key: string, value: string, ttlDays: number | null) {
 function getWithExpiry(key: string) {
   const itemStr = localStorage.getItem(key);
   if (!itemStr) return null;
-  const item = JSON.parse(itemStr);
+  let item: { value: string; expiry: number | null };
+  try {
+    item = JSON.parse(itemStr);
+  } catch {
+    localStorage.removeItem(key);
+    return null;
+  }
   const now = new Date();
   if (item.expiry && now.getTime() > item.expiry) {
     localStorage.removeItem(key);
@@ -30,33 +36,33 @@ function getWithExpiry(key: string) {
   return item.value;
 }
 
+type CVRole = "backend" | "fullstack";
+
+// ── CV Role detection ──────────────────────────────────────
+function hasBackendParam(searchParams: URLSearchParams) {
+  const roleParam = searchParams.get("role")?.toLowerCase();
+  return (
+    searchParams.has("BE") ||
+    roleParam === "b" ||
+    roleParam === "backend" ||
+    roleParam === "be" ||
+    searchParams.get("v")?.toLowerCase() === "be"
+  );
+}
+
+function resolveRole(searchParams: URLSearchParams): CVRole {
+  if (hasBackendParam(searchParams)) return "backend";
+  return getWithExpiry("cv_role") === "backend" ? "backend" : "fullstack";
+}
+
 export function useCVRole() {
-  const [role, setRole] = useState<"backend" | "fullstack">("fullstack");
+  const [role] = useState<CVRole>(() => resolveRole(new URLSearchParams(window.location.search)));
 
   useEffect(() => {
     const searchParams = new URLSearchParams(window.location.search);
 
-    // ── CV Role detection ──────────────────────────────────────
-    const roleParam = searchParams.get("role")?.toLowerCase();
-    const hasBEParam =
-      searchParams.has("BE") ||
-      roleParam === "b" ||
-      roleParam === "backend" ||
-      roleParam === "be" ||
-      searchParams.get("v")?.toLowerCase() === "be";
-
-    let resolvedRole: "backend" | "fullstack" = "fullstack";
-
-    if (hasBEParam) {
-      resolvedRole = "backend";
-      setWithExpiry("cv_role", "backend", 5);
-    } else {
-      const savedRole = getWithExpiry("cv_role");
-      if (savedRole === "backend") resolvedRole = "backend";
-    }
-
-    setRole(resolvedRole);
-    safeSetClarityTag("cv_role", resolvedRole);
+    if (hasBackendParam(searchParams)) setWithExpiry("cv_role", "backend", 5);
+    safeSetClarityTag("cv_role", role);
 
     // ── UTM Source tracking ────────────────────────────────────
     const utmSource = searchParams.get("utm_source");
@@ -88,7 +94,7 @@ export function useCVRole() {
       setWithExpiry("cv_tk", token, ttl);
       safeSetClarityTag("cv_tk", token);
       try {
-        clarity.event(`token:${token}`);
+        clarity.setEvent(`token:${token}`);
       } catch (e) {
         console.warn("Clarity event error:", e);
       }
@@ -96,7 +102,7 @@ export function useCVRole() {
       const savedToken = getWithExpiry("cv_tk");
       if (savedToken) safeSetClarityTag("cv_tk", savedToken);
     }
-  }, []);
+  }, [role]);
 
   const baseUrl = import.meta.env.BASE_URL || "/";
   const cleanBaseUrl = baseUrl.endsWith("/") ? baseUrl : `${baseUrl}/`;

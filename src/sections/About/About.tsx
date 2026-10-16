@@ -1,4 +1,4 @@
-import mePhoto from "../../assets/me.png";
+import mePhoto from "../../assets/me.webp";
 import { useTranslation } from "react-i18next";
 import { Code2, Briefcase, Layers, Download } from "lucide-react";
 import { useCVRole } from "../../hooks/useCVRole";

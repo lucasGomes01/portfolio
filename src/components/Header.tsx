@@ -26,6 +26,7 @@ export function Header() {
     { name: t('header.about'),    id: 'about' },
     { name: t('header.projects'), id: 'projects' },
     { name: t('header.skills'),   id: 'skills' },
+    { name: t('header.contact'),  id: 'contact' },
   ];
 
   return (
@@ -34,19 +35,19 @@ export function Header() {
         isScrolled ? 'py-4 bg-[#050b14]/80 backdrop-blur-md shadow-[0_4px_30px_rgba(0,0,0,0.5)] border-accent/10' : 'py-6 bg-transparent border-transparent'
       }`}
     >
-      <div className="max-w-7xl mx-auto px-6 md:px-20 flex items-center justify-between">
+      <div className="max-w-7xl mx-auto px-6 md:px-8 lg:px-20 flex items-center justify-between gap-4">
         {/* Logo */}
-        <a href="#" className="text-2xl font-bold tracking-tighter text-white drop-shadow-[0_0_10px_rgba(0,229,204,0.3)]">
+        <a href="#" className="text-2xl font-bold tracking-tighter text-white whitespace-nowrap drop-shadow-[0_0_10px_rgba(0,229,204,0.3)]">
           Lucas <span className="text-accent">Gomes</span>
         </a>
 
         {/* Desktop Nav */}
-        <nav className="hidden md:flex items-center gap-8">
+        <nav className="hidden md:flex items-center gap-5 lg:gap-8">
           {navLinks.map((link) => (
             <button
               key={link.name}
               onClick={() => scrollTo(link.id)}
-              className="text-sm font-medium text-blue-100/80 hover:text-accent transition-colors relative group bg-transparent border-0 cursor-pointer"
+              className="text-sm font-medium whitespace-nowrap text-blue-100/80 hover:text-accent transition-colors relative group bg-transparent border-0 cursor-pointer"
             >
               {link.name}
               <span className="absolute -bottom-1 left-0 w-0 h-[2px] bg-accent transition-all duration-300 group-hover:w-full"></span>

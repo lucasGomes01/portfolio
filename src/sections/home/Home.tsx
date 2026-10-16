@@ -1,4 +1,4 @@
-import avatar from "../../assets/avatar.png";
+import avatar from "../../assets/avatar.webp";
 import { ArrowRight, Download, ChevronDown, Mail } from "lucide-react";
 import { useTranslation } from "react-i18next";
 import { useCVRole } from "../../hooks/useCVRole";

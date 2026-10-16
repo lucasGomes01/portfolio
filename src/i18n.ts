@@ -14,8 +14,11 @@ const params = new URLSearchParams(window.location.search);
 const urlLang = params.get('lang');
 const initialLang = urlLang === 'en' || urlLang === 'pt' ? urlLang : 'pt';
 
-console.log(urlLang);
-  
+// Keep <html lang> in sync with the active language (accessibility / SEO)
+i18n.on('languageChanged', (lng) => {
+  document.documentElement.lang = lng === 'pt' ? 'pt-BR' : lng;
+});
+
 i18n
   .use(initReactI18next)
   .init({

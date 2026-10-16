@@ -1,6 +1,6 @@
-import { Monitor, Code2, BarChart3, Layout, Lock, ExternalLink, X, Globe, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
+import { BarChart3, Layout, Lock, ExternalLink, X, Globe, ArrowRight, ChevronLeft, ChevronRight } from "lucide-react";
 import { useTranslation } from "react-i18next";
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
 
 const GithubIcon = () => (
@@ -17,11 +17,14 @@ interface SmartImageProps extends React.ImgHTMLAttributes<HTMLImageElement> {
 const SmartImage = ({ src, alt, className, ...props }: SmartImageProps) => {
   const [imgSrc, setImgSrc] = useState(src);
   const [triedFallback, setTriedFallback] = useState(false);
+  const [prevSrc, setPrevSrc] = useState(src);
 
-  useEffect(() => {
+  // Reset when the source changes (adjusting state during render, no effect needed)
+  if (src !== prevSrc) {
+    setPrevSrc(src);
     setImgSrc(src);
     setTriedFallback(false);
-  }, [src]);
+  }
 
   const handleError = () => {
     if (!triedFallback) {
@@ -65,10 +68,10 @@ export function Projects() {
   const projectGalleries = [
     [
       `${import.meta.env.BASE_URL}/projects/mentoria_ai/mentoria_ia_list.png`,
-      `${import.meta.env.BASE_URL}/projects/mentoria_ai/mentoria_ia_list_RAG.png`,
-      `${import.meta.env.BASE_URL}/projects/mentoria_ai/mentoria_ia_list_RAG_2.png`,
+      `${import.meta.env.BASE_URL}/projects/mentoria_ai/mentoria_ia_list_RAG.webp`,
+      `${import.meta.env.BASE_URL}/projects/mentoria_ai/mentoria_ia_list_RAG_2.webp`,
       `${import.meta.env.BASE_URL}/projects/mentoria_ai/mentoria_ia_login.png`,
-      `${import.meta.env.BASE_URL}/projects/mentoria_ai/mentoria_ia_cadastro.png`,
+      `${import.meta.env.BASE_URL}/projects/mentoria_ai/mentoria_ia_cadastro.webp`,
     ],
     [
       `${import.meta.env.BASE_URL}/projects/chart_maker/chart_maker_home.webp`,
@@ -99,16 +102,14 @@ export function Projects() {
   const [selectedProject, setSelectedProject] = useState<typeof projects[0] | null>(null);
   const [currentImageIndex, setCurrentImageIndex] = useState(0);
 
-
+  const openProject = (project: typeof projects[0]) => {
+    setCurrentImageIndex(0);
+    setSelectedProject(project);
+  };
 
   // Prevent background scrolling when modal is open
   useEffect(() => {
-    if (selectedProject) {
-      document.body.style.overflow = 'hidden';
-      setCurrentImageIndex(0);
-    } else {
-      document.body.style.overflow = 'unset';
-    }
+    document.body.style.overflow = selectedProject ? 'hidden' : 'unset';
     return () => { document.body.style.overflow = 'unset'; };
   }, [selectedProject]);
 
@@ -210,10 +211,10 @@ export function Projects() {
 
             {/* Project list (single col on phone) */}
             <div className="relative z-10 px-3 pb-6 space-y-3" style={{ maxHeight: "520px" }}>
-              {projects.map((project, index) => (
+              {projects.map((project) => (
                 <div
                   key={project.id}
-                  onClick={() => setSelectedProject(project)}
+                  onClick={() => openProject(project)}
                   className="group flex items-center gap-3 p-4 rounded-xl transition-all duration-300 cursor-pointer"
                   style={{
                     background: "rgba(16,185,129,0.05)",
@@ -334,10 +335,10 @@ export function Projects() {
               {/* Project cards */}
               <div className="relative z-10 p-6">
                 <div className="grid grid-cols-2 gap-4">
-                  {projects.map((project, index) => (
+                  {projects.map((project) => (
                     <div
                       key={project.id}
-                      onClick={() => setSelectedProject(project)}
+                      onClick={() => openProject(project)}
                       className="group relative flex flex-col rounded-xl cursor-pointer transition-all duration-300 hover:-translate-y-[2px] overflow-hidden"
                       style={{ background: "#060f0a", border: "1px solid rgba(16,185,129,0.15)" }}
                       onMouseEnter={e => {
@@ -379,7 +380,7 @@ export function Projects() {
                             }}
                             onClick={(e) => {
                               e.stopPropagation();
-                              setSelectedProject(project);
+                              openProject(project);
                             }}
                           >
                             {t("projects.viewBtn")} <ArrowRight size={14} />
@@ -476,7 +477,7 @@ export function Projects() {
 
               <div className="flex items-center gap-3 min-w-0 relative z-10">
                 <div className="w-10 h-10 shrink-0 rounded-xl flex items-center justify-center bg-[#020c06] border border-[#10B981]/30 shadow-[0_0_12px_rgba(16,185,129,0.2)]">
-                  {React.cloneElement(selectedProject.icon as React.ReactElement<any>, { size: 22 })}
+                  {React.cloneElement(selectedProject.icon as React.ReactElement<{ size?: number }>, { size: 22 })}
                 </div>
                 <div className="min-w-0">
                   <h3 className="text-lg md:text-xl font-bold text-white leading-tight truncate">{selectedProject.title}</h3>
